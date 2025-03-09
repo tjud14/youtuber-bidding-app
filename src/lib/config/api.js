@@ -1,0 +1,1 @@
+export const API_BASE = '/api';  // This will use Vite's proxy
