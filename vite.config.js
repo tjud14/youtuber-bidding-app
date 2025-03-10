@@ -11,11 +11,6 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
-      '/media': {
-        target: 'http://api:8000', // Changed from backend to api
-        changeOrigin: true,
-        secure: false,
-      }
     },
   },
 });
