@@ -1,5 +1,4 @@
 name: youtuber-bidding-app
-
 services:
   app:
     build:
@@ -21,5 +20,4 @@ services:
 
 networks:
   youtuber-bidding:
-    name: youtuber-bidding
     external: true
