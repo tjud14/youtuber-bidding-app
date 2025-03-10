@@ -15,6 +15,10 @@
   let hasProfanity = false;
   let suggestion = '';
   
+  // Notification preferences
+  let outbidNotificationsEnabled = false;
+  let winNotificationsEnabled = false;
+  
   onMount(async () => {
     if (!$isAuthenticated) {
       goto('/login?redirect=/profile');
@@ -25,6 +29,12 @@
       user = await fetchApi('users/me/');
       nickname = user.nickname || '';
       email = user.email || '';
+      
+      // Set notification preferences from user data
+      // Assuming these fields exist or are added to your user model
+      outbidNotificationsEnabled = user.outbid_notifications_enabled || false;
+      winNotificationsEnabled = user.win_notifications_enabled || false;
+      
       loading = false;
     } catch (e) {
       console.error('Error loading user profile:', e);
@@ -67,37 +77,23 @@
     successMessage = '';
     
     try {
-      // First get CSRF token
-      const csrfToken = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('csrftoken='))
-        ?.split('=')[1];
+      // Prepare the update data
+      const updateData = {
+        nickname: nickname.trim(),
+        outbid_notifications_enabled: outbidNotificationsEnabled,
+        win_notifications_enabled: winNotificationsEnabled
+      };
       
-      // Update user's nickname with explicit headers
-      const response = await fetch('/api/users/update_profile/', {
+      // Update user's profile
+      const response = await fetchApi('users/update_profile/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'X-CSRFToken': csrfToken || ''
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          nickname: nickname.trim()
-        })
+        body: JSON.stringify(updateData)
       });
       
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || 'Failed to update profile');
-      }
-      
-      const result = await response.json();
-      
       // Update local user data
-      user = result;
+      user = response;
       
-      // Update authentication store to reflect the nickname change
+      // Update authentication store to reflect the changes
       await isAuthenticated.check();
       
       successMessage = 'Your profile has been updated successfully!';
@@ -183,6 +179,39 @@
               <p class="mt-1 text-sm text-gray-500">
                 This name will be displayed when you place bids or interact with other users.
               </p>
+            </div>
+            
+            <!-- Notification Preferences Section -->
+            <div class="rounded-lg border border-gray-200 bg-gray-50 p-4">
+              <h3 class="mb-3 text-lg font-medium text-gray-800">Email Notification Preferences</h3>
+              
+              <div class="space-y-3">
+                <div class="flex items-center">
+                  <input
+                    id="outbidNotifications"
+                    type="checkbox"
+                    bind:checked={outbidNotificationsEnabled}
+                    class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  />
+                  <label for="outbidNotifications" class="ml-2 block text-sm text-gray-700">
+                    Receive outbid notifications
+                    <p class="text-xs text-gray-500">Get an email when someone outbids you in an auction</p>
+                  </label>
+                </div>
+                
+                <div class="flex items-center">
+                  <input
+                    id="winNotifications"
+                    type="checkbox"
+                    bind:checked={winNotificationsEnabled}
+                    class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  />
+                  <label for="winNotifications" class="ml-2 block text-sm text-gray-700">
+                    Receive auction win notifications
+                    <p class="text-xs text-gray-500">Get an email when you win an auction</p>
+                  </label>
+                </div>
+              </div>
             </div>
             
             <div class="flex justify-end">

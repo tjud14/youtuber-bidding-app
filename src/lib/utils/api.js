@@ -1,17 +1,16 @@
 export const fetchApi = async (endpoint, options = {}) => {
   console.log('fetchApi called with:', { endpoint, options });
-  
-  // IMPORTANT: Use relative path only, never use http://api:8000 directly
+
   const baseUrl = '/api';
   const url = endpoint.startsWith('/') ? `${baseUrl}${endpoint}` : `${baseUrl}/${endpoint}`;
-  
+
   // Set default headers
   const headers = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
     ...options.headers,
   };
-  
+
   try {
     // Always include CSRF token for POST, PUT, PATCH, DELETE
     if (options.method && options.method !== 'GET') {
@@ -21,23 +20,24 @@ export const fetchApi = async (endpoint, options = {}) => {
         headers['X-CSRFToken'] = csrfToken;
       }
     }
-    
+
     console.log('Making fetch request to:', url);
     console.log('With credentials:', 'include');
     console.log('Headers:', headers);
     
     const response = await fetch(url, {
       ...options,
-      credentials: 'include', // This is critical for sending/receiving cookies
+      credentials: 'include',  // This is critical for sending/receiving cookies
       headers,
     });
-    
+
     // Log the response status and headers
     console.log(`Response status: ${response.status}`);
     console.log('Response headers:', [...response.headers.entries()]);
-    
+
     if (!response.ok) {
       let errorMessage = `HTTP error! status: ${response.status}`;
+      
       // Try to get more detailed error message
       try {
         const errorData = await response.json();
@@ -57,14 +57,15 @@ export const fetchApi = async (endpoint, options = {}) => {
           // If that fails too, just use the status error
         }
       }
+      
       throw new Error(errorMessage);
     }
-    
+
     const contentType = response.headers.get('content-type');
     if (contentType && contentType.includes('application/json')) {
       return await response.json();
     }
-    
+
     return null;
   } catch (error) {
     console.error('API Error:', error);
@@ -79,7 +80,7 @@ export const getCsrfToken = async () => {
       .split('; ')
       .find(row => row.startsWith('csrftoken='))
       ?.split('=')[1];
-      
+    
     if (token) {
       console.log('Found CSRF token in cookies:', token);
       return token;
@@ -93,7 +94,7 @@ export const getCsrfToken = async () => {
         Accept: 'application/json',
       },
     });
-    
+
     if (!response.ok) {
       throw new Error('Failed to fetch CSRF token');
     }
@@ -115,6 +116,7 @@ export const logCookies = () => {
     acc[name] = value;
     return acc;
   }, {});
+  
   console.log('Parsed cookies:', cookies);
   return cookies;
 };
