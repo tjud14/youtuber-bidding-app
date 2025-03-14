@@ -43,60 +43,21 @@
       const id = $page.params.id;
       console.log(`Loading item ${id}`);
       
-      // First try to load from prefetched data if available
-      if (item) {
-        timeRemaining = getTimeRemaining(item.end_date);
-        loading = false;
-        return;
-      }
-      
-      // Try the generic items endpoint first
       try {
-        console.log('Trying generic items endpoint...');
+        // Try the primary endpoint
         const data = await fetchApi(`items/${id}/`);
-        if (data) {
-          console.log('Successfully loaded from items endpoint');
-          item = data;
-          timeRemaining = getTimeRemaining(item.end_date);
-          loading = false;
-          return;
-        }
-      } catch (e) {
-        console.warn('Failed to load from items endpoint:', e.message);
+        item = data;
+        timeRemaining = getTimeRemaining(item.end_date);
+      } catch (primaryError) {
+        console.warn('Primary endpoint failed:', primaryError.message);
+        
+        // Try category-specific endpoint as fallback
+        const category = $page.url.pathname.split('/')[1];
+        console.log(`Trying ${category}-specific endpoint`);
+        const data = await fetchApi(`${category}/${id}/`);
+        item = data;
+        timeRemaining = getTimeRemaining(item.end_date);
       }
-      
-      // Try the category-specific endpoint as fallback
-      try {
-        console.log('Trying paint-specific endpoint...');
-        const data = await fetchApi(`paint/${id}/`);
-        if (data) {
-          console.log('Successfully loaded from paint endpoint');
-          item = data;
-          timeRemaining = getTimeRemaining(item.end_date);
-          loading = false;
-          return;
-        }
-      } catch (e) {
-        console.warn('Failed to load from paint endpoint:', e.message);
-      }
-      
-      // If both failed, try the debug endpoint as a last resort
-      try {
-        console.log('Trying debug endpoint...');
-        const response = await fetchApi(`debug/item4/`);
-        if (response && response.item) {
-          console.log('Successfully loaded from debug endpoint');
-          item = response.serialized_item;
-          timeRemaining = getTimeRemaining(item.end_date);
-          loading = false;
-          return;
-        }
-      } catch (e) {
-        console.warn('Failed to load from debug endpoint:', e.message);
-      }
-      
-      // If we get here, all attempts failed
-      throw new Error('Could not load item data from any endpoint');
     } catch (e) {
       console.error('Error in refreshItem:', e);
       error = e.message || 'Failed to load auction details';
@@ -167,7 +128,9 @@
   }
 
   function handleImageError(e) {
+    console.error('Image failed to load:', e.currentTarget.src);
     e.currentTarget.src = '/placeholder.jpg';
+    e.currentTarget.onerror = null; // Prevent infinite error loops
   }
 
   onMount(async () => {
@@ -240,9 +203,9 @@
           <div>
             <div class="relative">
               <img
-                src={item.images?.length > 0
+                src={item.image_url || (item.images?.length > 0
                   ? item.images[currentImageIndex].image
-                  : '/placeholder.jpg'}
+                  : '/placeholder.jpg')}
                 alt={item.title}
                 class="w-full rounded-lg shadow-md"
                 on:error={handleImageError}
@@ -281,12 +244,10 @@
               <div class="mt-4 grid grid-cols-4 gap-2">
                 {#each item.images as image, i}
                   <img
-                    src={image.image}
+                    src={image.image_url || image.image}
                     alt={`${item.title} - Image ${i + 1}`}
                     class="h-20 w-full cursor-pointer rounded object-cover hover:opacity-75 {i ===
-                    currentImageIndex
-                      ? 'ring-2 ring-blue-500'
-                      : ''}"
+                    currentImageIndex ? 'ring-2 ring-blue-500' : ''}"
                     on:click={() => selectImage(i)}
                     on:error={handleImageError}
                   />

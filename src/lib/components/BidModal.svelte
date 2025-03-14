@@ -62,6 +62,9 @@
       if (parseFloat(bidAmount) < currentPrice + 1) {
         throw new Error('Minimum bid increment is $1.00');
       }
+      
+      // Log the bid attempt details
+      console.log(`Placing bid on item ${item.id} with amount $${bidAmount}`);
 
       const response = await fetchApi(`items/${item.id}/place_bid/`, {
         method: 'POST',
@@ -69,6 +72,8 @@
           amount: parseFloat(bidAmount),
         }),
       });
+      
+      console.log('Bid placed successfully:', response);
 
       // Close modal and emit event to parent component to handle updating UI
       show = false;
@@ -76,11 +81,16 @@
     } catch (e) {
       console.error('Bid error:', e);
       
-      // Simplified error handling since backend now returns clean errors
+      // Improved error handling
       if (e.response && e.response.data && e.response.data.detail) {
         error = e.response.data.detail;
       } else if (e.message) {
-        error = e.message;
+        // Clean up error message if it's from the API
+        if (e.message.startsWith('API Error:')) {
+          error = e.message.replace('API Error:', '').trim();
+        } else {
+          error = e.message;
+        }
       } else {
         error = 'Failed to place bid';
       }

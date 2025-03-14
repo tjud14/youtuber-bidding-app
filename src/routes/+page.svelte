@@ -71,6 +71,11 @@
       }
 
       const data = await response.json();
+      console.log('API Response:', data);
+      
+      if (data.results && data.results.length > 0) {
+        console.log('First item category:', data.results[0].category);
+      }
       
       // Calculate the date 24 hours ago
       const twentyFourHoursAgo = new Date();
@@ -83,6 +88,9 @@
       })).filter(item => {
         const endDate = new Date(item.end_date);
         const now = new Date();
+        
+        // Debug category data
+        console.log(`Item ${item.id} (${item.title}) category:`, item.category);
         
         // Keep item if NOT expired, OR if expired less than 24 hours ago
         return !item.timeRemaining.isExpired || (item.timeRemaining.isExpired && endDate > twentyFourHoursAgo);
@@ -159,16 +167,24 @@
           class="flex flex-col overflow-hidden rounded-lg bg-white bg-opacity-95 shadow-lg transition duration-300 hover:shadow-xl"
         >
           <img
-            src={item.images?.length > 0 ? item.images[0].image : '/placeholder.jpg'}
+            src={item.image_url || (item.images?.length > 0 ? item.images[0].image : '/placeholder.jpg')}
             alt={item.title}
             class="h-64 w-full object-cover"
             on:error={handleImageError}
           />
           <div class="flex flex-grow flex-col p-6">
             <h2 class="mb-2 text-2xl font-semibold text-blue-500">{item.title}</h2>
-            <span class="mb-2 text-sm font-medium text-gray-500"
-              >{item.category?.name || 'Uncategorized'}</span
-            >
+            <span class="mb-2 text-sm font-medium text-gray-500">
+              {#if typeof item.category === 'object' && item.category !== null}
+                {item.category.name || (item.category.code === 'PAINT' ? 'Paint' : item.category.code === 'KNIFE' ? 'Knife' : item.category.code === 'MISC' ? 'Miscellaneous' : 'Uncategorized')}
+              {:else if item.category_name}
+                {item.category_name}
+              {:else if item.category_code}
+                {item.category_code === 'PAINT' ? 'Paintings/Art' : item.category_code === 'KNIFE' ? 'Knives' : item.category_code === 'MISC' ? 'Miscellaneous items' : 'Uncategorized'}
+              {:else}
+                Uncategorized
+              {/if}
+            </span>
             <p class="mb-4 line-clamp-2 text-gray-600">{item.description}</p>
 
             {#if item.timeRemaining}
@@ -192,7 +208,11 @@
             <div class="mt-auto flex items-center justify-between">
               <span class="text-lg font-bold text-blue-600">{formatPrice(item.current_price)}</span>
               <a
-                href="/{item.category_code?.toLowerCase() || (item.category?.code?.toLowerCase()) || 'misc'}/{item.id}"
+                href={typeof item.category === 'object' && item.category !== null 
+                  ? `/${item.category.code?.toLowerCase() || 'misc'}/${item.id}`
+                  : item.category_code 
+                    ? `/${item.category_code.toLowerCase()}/${item.id}`
+                    : `/misc/${item.id}`}
                 class="rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600"
                 >View Auction</a
               >
