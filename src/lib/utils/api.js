@@ -1,112 +1,129 @@
-export const fetchApi = async (endpoint, options = {}) => {
-  console.log('fetchApi called with:', { endpoint, options });
+let csrfToken = null;
 
-  const baseUrl = '/api';
-  const url = endpoint.startsWith('/') ? `${baseUrl}${endpoint}` : `${baseUrl}/${endpoint}`;
-
-  // Set default headers
-  const headers = {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-    ...options.headers,
-  };
+/**
+ * Get CSRF token from the API server
+ */
+export async function getCsrfToken() {
+  if (csrfToken) return csrfToken;
 
   try {
-    // Always include CSRF token for POST, PUT, PATCH, DELETE
-    if (options.method && options.method !== 'GET') {
-      const csrfToken = await getCsrfToken();
-      if (csrfToken) {
-        console.log('Adding CSRF token to request:', csrfToken);
-        headers['X-CSRFToken'] = csrfToken;
-      }
-    }
-
-    console.log('Making fetch request to:', url);
-    console.log('With credentials:', 'include');
-    console.log('Headers:', headers);
-    
-    const response = await fetch(url, {
-      ...options,
-      credentials: 'include',  // This is critical for sending/receiving cookies
-      headers,
-    });
-
-    // Log the response status and headers
-    console.log(`Response status: ${response.status}`);
-    console.log('Response headers:', [...response.headers.entries()]);
-
-    if (!response.ok) {
-      let errorMessage = `HTTP error! status: ${response.status}`;
-      
-      // Try to get more detailed error message
-      try {
-        const errorData = await response.json();
-        console.log('Error response data:', errorData);
-        if (errorData.detail) {
-          errorMessage = errorData.detail;
-        }
-      } catch (e) {
-        // If response isn't JSON, try to get text
-        try {
-          const errorText = await response.text();
-          console.log('Error response text:', errorText);
-          if (errorText) {
-            errorMessage = errorText;
-          }
-        } catch {
-          // If that fails too, just use the status error
-        }
-      }
-      
-      throw new Error(errorMessage);
-    }
-
-    const contentType = response.headers.get('content-type');
-    if (contentType && contentType.includes('application/json')) {
-      return await response.json();
-    }
-
-    return null;
-  } catch (error) {
-    console.error('API Error:', error);
-    throw error;
-  }
-};
-
-export const getCsrfToken = async () => {
-  try {
-    // First try to get it from cookies
-    const token = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('csrftoken='))
-      ?.split('=')[1];
-    
-    if (token) {
-      console.log('Found CSRF token in cookies:', token);
-      return token;
-    }
-    
-    // If not in cookies, fetch it from the API
-    console.log('No CSRF token in cookies, fetching from API');
     const response = await fetch('/api/csrf/', {
+      method: 'GET',
       credentials: 'include',
-      headers: {
-        Accept: 'application/json',
-      },
     });
-
+    
     if (!response.ok) {
-      throw new Error('Failed to fetch CSRF token');
+      throw new Error(`Failed to get CSRF token: ${response.status} ${response.statusText}`);
     }
     
     const data = await response.json();
-    console.log('Received CSRF token from API:', data.csrfToken);
-    return data.csrfToken;
+    csrfToken = data.csrfToken;
+    console.log('CSRF token acquired:', csrfToken ? 'SUCCESS' : 'FAILED');
+    return csrfToken;
   } catch (error) {
-    console.error('Failed to get CSRF token:', error);
-    return null;
+    console.error('Error getting CSRF token:', error);
+    throw error;
   }
-};
+}
+
+/**
+ * Fetch data from the API
+ * @param {string} endpoint - API endpoint
+ * @param {Object} options - Fetch options
+ * @returns {Promise<any>} Response data
+ */
+export async function fetchApi(endpoint, options = {}) {
+  const url = `/api/${endpoint}`;
+  console.log(`Fetching from: ${url}`);
+  
+  // Ensure we have a CSRF token if making non-GET requests
+  if (options.method && options.method !== 'GET' && !csrfToken) {
+    await getCsrfToken();
+  }
+  
+  // Prepare fetch options with defaults
+  const fetchOptions = {
+    method: options.method || 'GET',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+    ...options,
+  };
+  
+  // Add CSRF token for non-GET requests
+  if (fetchOptions.method !== 'GET' && csrfToken) {
+    fetchOptions.headers['X-CSRFToken'] = csrfToken;
+  }
+  
+  try {
+    const response = await fetch(url, fetchOptions);
+    
+    // Log detailed information about the response
+    console.log(`API response status: ${response.status} ${response.statusText}`);
+    
+    if (!response.ok) {
+      // Try to get error details if available
+      let errorMessage;
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.detail || JSON.stringify(errorData);
+      } catch (e) {
+        errorMessage = `${response.status} ${response.statusText}`;
+      }
+      
+      throw new Error(`API Error: ${errorMessage}`);
+    }
+    
+    // Handle no content responses
+    if (response.status === 204) {
+      return null;
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error(`API request failed: ${url}`, error);
+    throw error;
+  }
+}
+
+/**
+ * Post data to the API
+ * @param {string} endpoint - API endpoint
+ * @param {Object} data - Data to post
+ * @returns {Promise<any>} Response data
+ */
+export async function postApi(endpoint, data) {
+  return fetchApi(endpoint, {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+/**
+ * Put data to the API
+ * @param {string} endpoint - API endpoint
+ * @param {Object} data - Data to put
+ * @returns {Promise<any>} Response data
+ */
+export async function putApi(endpoint, data) {
+  return fetchApi(endpoint, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+  });
+}
+
+/**
+ * Delete data from the API
+ * @param {string} endpoint - API endpoint
+ * @returns {Promise<any>} Response data
+ */
+export async function deleteApi(endpoint) {
+  return fetchApi(endpoint, {
+    method: 'DELETE',
+  });
+}
 
 // Helper function to debug cookies
 export const logCookies = () => {

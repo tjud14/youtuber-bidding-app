@@ -11,12 +11,13 @@ services:
       - ../env/.env.dev
     environment:
       - NODE_ENV=${NODE_ENV:-development}
-      - VITE_PUBLIC_API_URL=http://api:8000/api
+      - VITE_PUBLIC_API_URL=http://localhost:8000/api
     ports:
       - "5173:5173"
     restart: unless-stopped
     networks:
       - youtuber-bidding
+    command: sh -c "npm install @sveltejs/adapter-auto && npm run dev -- --host 0.0.0.0"
 
 networks:
   youtuber-bidding:

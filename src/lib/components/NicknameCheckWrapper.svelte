@@ -9,6 +9,19 @@
     let showPrompt = false;
     let user = null;
     
+    // Function to force close the prompt
+    function closePrompt() {
+      console.log('Force closing nickname prompt');
+      showPrompt = false;
+      hasSetNickname.set(true);
+    }
+    
+    // Reactively hide the prompt when hasSetNickname becomes true
+    $: if ($hasSetNickname && showPrompt) {
+      console.log('Nickname has been set, hiding prompt from wrapper');
+      showPrompt = false;
+    }
+    
     onMount(async () => {
       // Make sure authentication is checked first
       await isAuthenticated.check();
@@ -43,5 +56,5 @@
 <slot></slot>
   
 {#if showPrompt && user}
-  <NicknamePrompt show={true} {user} />
+  <NicknamePrompt show={true} {user} onClose={closePrompt} />
 {/if}

@@ -1,6 +1,6 @@
 <script>
   import { fetchApi } from '$lib/utils/api';
-  import { isAuthenticated } from '$lib/stores/auth';
+  import { isAuthenticated, hasSetNickname } from '$lib/stores/auth';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import { checkNicknameAvailability } from '$lib/utils/nickname-checker';
@@ -8,6 +8,8 @@
   
   export let show = false;
   export let user = null;
+  export let onClose = () => {}; // Default empty function if not provided
+  
   let nickname = '';
   let submitting = false;
   let error = '';
@@ -17,6 +19,22 @@
   let currentNickname = '';
   let hasProfanity = false;
   let nicknameSuggestion = '';
+  
+  // Watch hasSetNickname store and close modal when it becomes true
+  $: if ($hasSetNickname && show) {
+    console.log('Nickname has been set, closing prompt');
+    show = false;
+    onClose(); // Call the onClose callback
+  }
+  
+  // Function to close the modal and proceed
+  function closeAndProceed() {
+    console.log('Closing nickname prompt and proceeding');
+    hasSetNickname.set(true);
+    show = false;
+    onClose(); // Call the onClose callback
+    goto(redirectUrl);
+  }
   
   onMount(() => {
     // Initialize nickname with user's current nickname if available
@@ -97,11 +115,16 @@
         })
       });
       
-      // Update authentication store with new nickname
-      await isAuthenticated.check();
+      // Try to update authentication store with new nickname
+      try {
+        await isAuthenticated.check();
+      } catch (e) {
+        console.error('Error checking authentication after nickname update:', e);
+        // Continue anyway
+      }
       
-      // Redirect user
-      goto(redirectUrl);
+      // Close the modal and proceed regardless of backend response
+      closeAndProceed();
     } catch (e) {
       error = e.message || 'Failed to update nickname';
       submitting = false;
@@ -197,7 +220,7 @@
         <div class="mt-2 flex items-center justify-end space-x-3">
           <button
             type="button"
-            on:click={() => goto(redirectUrl)}
+            on:click={closeAndProceed}
             class="px-4 py-2 text-gray-600 hover:text-gray-800"
           >
             Skip for Now

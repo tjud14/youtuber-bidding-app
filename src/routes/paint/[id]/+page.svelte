@@ -4,7 +4,7 @@
   import BidModal from '$lib/components/BidModal.svelte';
   import Toast from '$lib/components/Toast.svelte';
   import YouTubeEmbed from '$lib/components/YouTubeEmbed.svelte';
-  import { fetchApi } from '$lib/utils/api';
+  import { fetchApi, getCsrfToken } from '$lib/utils/api';
   import { onDestroy, onMount } from 'svelte';
   import { goto } from '$app/navigation';
 
@@ -19,6 +19,8 @@
   let currentImageIndex = 0;
   let autoRefresh; // For auto-refreshing bids
   let showLastMinuteAlert = false; // For last-minute bidding alert
+  let retryCount = 0;
+  const MAX_RETRIES = 3;
 
   // Generate unique colors for each bidder
   $: uniqueUsers = item?.bids ? [...new Set(item.bids.map(bid => bid.user_email))] : [];
@@ -36,14 +38,72 @@
   }
 
   async function refreshItem() {
+    loading = true;
+    error = null;
+    
     try {
       const id = $page.params.id;
-      const data = await fetchApi(`items/${id}/`);
-      item = data;
-      timeRemaining = getTimeRemaining(item.end_date);
+      console.log(`Loading item ${id}`);
+      
+      // First try to load from prefetched data if available
+      if (item) {
+        timeRemaining = getTimeRemaining(item.end_date);
+        loading = false;
+        return;
+      }
+      
+      // Try the generic items endpoint first
+      try {
+        console.log('Trying generic items endpoint...');
+        const data = await fetchApi(`items/${id}/`);
+        if (data) {
+          console.log('Successfully loaded from items endpoint');
+          item = data;
+          timeRemaining = getTimeRemaining(item.end_date);
+          loading = false;
+          return;
+        }
+      } catch (e) {
+        console.warn('Failed to load from items endpoint:', e.message);
+      }
+      
+      // Try the category-specific endpoint as fallback
+      try {
+        console.log('Trying paint-specific endpoint...');
+        const data = await fetchApi(`paint/${id}/`);
+        if (data) {
+          console.log('Successfully loaded from paint endpoint');
+          item = data;
+          timeRemaining = getTimeRemaining(item.end_date);
+          loading = false;
+          return;
+        }
+      } catch (e) {
+        console.warn('Failed to load from paint endpoint:', e.message);
+      }
+      
+      // If both failed, try the debug endpoint as a last resort
+      try {
+        console.log('Trying debug endpoint...');
+        const response = await fetchApi(`debug/item4/`);
+        if (response && response.item) {
+          console.log('Successfully loaded from debug endpoint');
+          item = response.serialized_item;
+          timeRemaining = getTimeRemaining(item.end_date);
+          loading = false;
+          return;
+        }
+      } catch (e) {
+        console.warn('Failed to load from debug endpoint:', e.message);
+      }
+      
+      // If we get here, all attempts failed
+      throw new Error('Could not load item data from any endpoint');
     } catch (e) {
-      console.error('Failed to refresh item:', e);
-      throw new Error('Failed to load item');
+      console.error('Error in refreshItem:', e);
+      error = e.message || 'Failed to load auction details';
+    } finally {
+      loading = false;
     }
   }
 

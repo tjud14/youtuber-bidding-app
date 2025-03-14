@@ -192,7 +192,7 @@
             <div class="mt-auto flex items-center justify-between">
               <span class="text-lg font-bold text-blue-600">{formatPrice(item.current_price)}</span>
               <a
-                href="/{item.category?.code?.toLowerCase() || 'misc'}/{item.id}"
+                href="/{item.category_code?.toLowerCase() || (item.category?.code?.toLowerCase()) || 'misc'}/{item.id}"
                 class="rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600"
                 >View Auction</a
               >
@@ -200,6 +200,15 @@
           </div>
         </div>
       {/each}
+    </div>
+
+    <div class="bg-blue-100 p-4 mb-4 rounded-lg">
+      <h2 class="text-lg font-bold">Troubleshooting</h2>
+      <p>Direct link to item ID 4 (SIGMA THE FIRST!):</p>
+      <div class="flex gap-2 mt-2">
+        <a href="/paint/4" class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Paint Category (correct)</a>
+        <a href="/items/4" class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600">Generic Item Route</a>
+      </div>
     </div>
   {/if}
 </div>
