@@ -70,44 +70,55 @@
 
       console.log(`Submitting form with ${selectedFiles.length} images`);
 
+      // Step 1: Create the item without images first
       const csrfToken = await getCsrfToken();
-      const form = new FormData();
-
-      // Add fields to FormData
-      form.append('title', formData.title);
-      form.append('category_id', formData.category);
-      form.append('description', formData.description);
-      form.append('starting_price', formData.starting_price);
-      form.append('end_date', formData.end_date);
-      form.append('is_active', 'true');
-      form.append('youtube_url', formData.youtube_url || '');
       
-      if (formData.youtube_url) {
-        form.append('youtube_url', formData.youtube_url);
-      }
+      // Create a JSON object for the initial item creation
+      const itemData = {
+        title: formData.title,
+        category_id: formData.category,
+        description: formData.description,
+        starting_price: formData.starting_price,
+        end_date: formData.end_date,
+        is_active: true,
+        youtube_url: formData.youtube_url || ''
+      };
       
-      // Add each image separately with the same field name
-      selectedFiles.forEach((image, index) => {
-        console.log(`Appending image ${index}: ${image.name}`);
-        form.append('images', image);
+      // First create the item
+      const createResponse = await fetchApi('items/', {
+        method: 'POST',
+        body: JSON.stringify(itemData),
       });
       
-      // Debug - log what's in the form
-      console.log(`FormData contains ${selectedFiles.length} images`);
-
-      const response = await fetch('/api/items/', {
+      if (!createResponse.id) {
+        throw new Error('Failed to create item: No item ID returned');
+      }
+      
+      // Step 2: Now upload the images in a separate request
+      const newItemId = createResponse.id;
+      console.log(`Item created with ID ${newItemId}, now uploading ${selectedFiles.length} images`);
+      
+      // Create form data for images
+      const imageForm = new FormData();
+      
+      // Add each image to the form
+      selectedFiles.forEach(file => {
+        imageForm.append('images', file);
+      });
+      
+      // Make a separate request for image uploads
+      const uploadResponse = await fetch(`/api/items/${newItemId}/add_images/`, {
         method: 'POST',
         headers: {
           'X-CSRFToken': csrfToken,
         },
         credentials: 'include',
-        body: form,
+        body: imageForm
       });
-
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        throw new Error(responseData.detail || 'Failed to create item');
+      
+      if (!uploadResponse.ok) {
+        const data = await uploadResponse.json();
+        throw new Error(data.detail || 'Failed to upload images');
       }
 
       dispatch('itemAdded');
