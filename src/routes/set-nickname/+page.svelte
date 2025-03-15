@@ -77,6 +77,8 @@
       
       // Update authentication store with new nickname
       await isAuthenticated.check();
+
+       show = false;
       
       // Redirect user
       goto(redirectUrl);
