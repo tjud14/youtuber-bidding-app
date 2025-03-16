@@ -2,6 +2,7 @@
   import { fetchApi } from '$lib/utils/api';
   import { onDestroy, onMount } from 'svelte';
   import PastAuctions from '$lib/components/PastAuctions.svelte';
+  import ResponsiveImage from '$lib/components/ResponsiveImage.svelte';
 
   let items = [];
   let loading = true;
@@ -55,6 +56,7 @@
   async function loadItems() {
     try {
       const data = await fetchApi('items/?active=true&category=KNIFE');
+      
       items = data.results
         .filter(item => !isAuctionEnded(item.end_date))
         .map(item => ({
@@ -159,12 +161,24 @@
           <div
             class="flex flex-col overflow-hidden rounded-lg bg-white bg-opacity-95 shadow-lg transition duration-300 hover:shadow-xl"
           >
-            <img
-              src={item.images && item.images.length > 0 ? item.images[0].image : '/placeholder.jpg'}
-              alt={item.title}
-              class="h-64 w-full bg-gray-100 object-cover"
-              on:error={handleImageError}
-            />
+            {#if item.images?.length > 0 && item.images[0].image}
+              <ResponsiveImage
+                src={item.images[0].image}
+                webpSrc={item.images[0].webp_url || ''}
+                width={item.images[0].width || 0}
+                height={item.images[0].height || 0}
+                alt={item.title}
+                className="h-64 w-full object-cover"
+                fallbackSrc="/placeholder.jpg"
+              />
+            {:else}
+              <img
+                src="/placeholder.jpg"
+                alt={item.title}
+                class="h-64 w-full bg-gray-100 object-cover"
+                on:error={handleImageError}
+              />
+            {/if}
             <div class="flex flex-grow flex-col p-6">
               <h2 class="mb-2 text-2xl font-semibold text-blue-500">{item.title}</h2>
               <span class="mb-2 text-sm font-medium text-gray-500">

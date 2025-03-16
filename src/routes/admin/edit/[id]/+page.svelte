@@ -3,6 +3,7 @@
   import { page } from '$app/stores';
   import { isAuthenticated } from '$lib/stores/auth';
   import { fetchApi, getCsrfToken } from '$lib/utils/api';
+  import ResponsiveImage from '$lib/components/ResponsiveImage.svelte';
   import { onMount } from 'svelte';
 
   let item = null;
@@ -324,7 +325,14 @@
             <div class="grid grid-cols-3 gap-2">
               {#each item.images as image, i}
                 <div class="relative rounded border">
-                  <img src={image.image} alt="Item" class="h-24 w-full object-cover rounded" />
+                  <ResponsiveImage
+                    src={image.image}
+                    webpSrc={image.webp_url}
+                    width={image.width}
+                    height={image.height}
+                    alt="Item"
+                    className="h-24 w-full object-cover rounded"
+                  />
                   <button 
                     type="button" 
                     class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center"

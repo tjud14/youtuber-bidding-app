@@ -4,6 +4,7 @@
   import BidModal from '$lib/components/BidModal.svelte';
   import Toast from '$lib/components/Toast.svelte';
   import YouTubeEmbed from '$lib/components/YouTubeEmbed.svelte';
+  import ResponsiveImage from '$lib/components/ResponsiveImage.svelte';
   import { fetchApi } from '$lib/utils/api';
   import { onDestroy, onMount } from 'svelte';
   import { goto } from '$app/navigation';
@@ -181,14 +182,24 @@
         <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
           <div>
             <div class="relative">
-              <img
-                src={item.images?.length > 0
-                  ? item.images[currentImageIndex].image
-                  : '/placeholder.jpg'}
-                alt={item.title}
-                class="w-full rounded-lg shadow-md"
-                on:error={handleImageError}
-              />
+              {#if item.images?.length > 0}
+                <ResponsiveImage
+                  src={item.images[currentImageIndex].image}
+                  webpSrc={item.images[currentImageIndex].webp_url}
+                  width={item.images[currentImageIndex].width}
+                  height={item.images[currentImageIndex].height}
+                  alt={item.title}
+                  className="w-full rounded-lg shadow-md"
+                  objectFit="contain"
+                />
+              {:else}
+                <img
+                  src="/placeholder.jpg"
+                  alt={item.title}
+                  class="w-full rounded-lg shadow-md"
+                  on:error={handleImageError}
+                />
+              {/if}
               {#if item.images?.length > 1}
                 <button
                   class="absolute left-2 top-1/2 -translate-y-1/2 transform rounded-full bg-black bg-opacity-50 p-2 text-white"
@@ -222,16 +233,16 @@
             {#if item.images?.length > 1}
               <div class="mt-4 grid grid-cols-4 gap-2">
                 {#each item.images as image, i}
-                  <img
-                    src={image.image}
-                    alt={`${item.title} - Image ${i + 1}`}
-                    class="h-20 w-full cursor-pointer rounded object-cover hover:opacity-75 {i ===
-                    currentImageIndex
-                      ? 'ring-2 ring-blue-500'
-                      : ''}"
-                    on:click={() => selectImage(i)}
-                    on:error={handleImageError}
-                  />
+                  <div class="cursor-pointer {i === currentImageIndex ? 'ring-2 ring-blue-500' : ''}" on:click={() => selectImage(i)}>
+                    <ResponsiveImage
+                      src={image.image}
+                      webpSrc={image.webp_url}
+                      width={image.width}
+                      height={image.height}
+                      alt={`${item.title} - Image ${i + 1}`}
+                      className="h-20 w-full rounded object-cover hover:opacity-75"
+                    />
+                  </div>
                 {/each}
               </div>
             {/if}

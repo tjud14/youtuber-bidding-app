@@ -1,6 +1,7 @@
 <script>
   import { fetchApi, getCsrfToken } from '$lib/utils/api';
   import { createEventDispatcher, onMount } from 'svelte';
+  import ResponsiveImage from '$lib/components/ResponsiveImage.svelte';
   const dispatch = createEventDispatcher();
 
   export let show = false;
@@ -84,18 +85,35 @@
         youtube_url: formData.youtube_url || ''
       };
       
-      // First create the item
-      const createResponse = await fetchApi('items/', {
-        method: 'POST',
-        body: JSON.stringify(itemData),
-      });
+      console.log('Submitting item data:', JSON.stringify(itemData));
       
-      if (!createResponse.id) {
+      // First create the item
+      let createResponse;
+      try {
+        createResponse = await fetchApi('items/', {
+          method: 'POST',
+          body: JSON.stringify(itemData),
+        });
+      } catch (err) {
+        console.error('Error during item creation API call:', err);
+        throw new Error(`Failed to create item: ${err.message}`);
+      }
+      
+      console.log('Item creation response:', createResponse);
+      
+      // Check if we have an ID from the response - handle different response formats
+      const itemId = createResponse.id || 
+                    (createResponse.data && createResponse.data.id) || 
+                    (typeof createResponse === 'object' && Object.keys(createResponse).length > 0 ? 
+                      createResponse[Object.keys(createResponse)[0]] : null);
+      
+      if (!itemId) {
+        console.error('No item ID found in response:', createResponse);
         throw new Error('Failed to create item: No item ID returned');
       }
       
       // Step 2: Now upload the images in a separate request
-      const newItemId = createResponse.id;
+      const newItemId = itemId;
       console.log(`Item created with ID ${newItemId}, now uploading ${selectedFiles.length} images`);
       
       // Create form data for images
@@ -116,10 +134,20 @@
         body: imageForm
       });
       
+      console.log('Image upload response status:', uploadResponse.status);
+      
       if (!uploadResponse.ok) {
-        const data = await uploadResponse.json();
-        throw new Error(data.detail || 'Failed to upload images');
+        let errorData;
+        try {
+          errorData = await uploadResponse.json();
+          console.error('Image upload error details:', errorData);
+        } catch (e) {
+          console.error('Could not parse upload error response');
+        }
+        throw new Error(errorData?.detail || `Failed to upload images: ${uploadResponse.status}`);
       }
+      
+      console.log('Images uploaded successfully');
 
       dispatch('itemAdded');
       show = false;
