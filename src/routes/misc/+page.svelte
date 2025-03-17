@@ -3,6 +3,9 @@
   import { onDestroy, onMount } from 'svelte';
   import PastAuctions from '$lib/components/PastAuctions.svelte';
   import ResponsiveImage from '$lib/components/ResponsiveImage.svelte';
+  import CardContainer from '$lib/components/ui/3d-card/3DCardComponents.svelte';
+  import CardBody from '$lib/components/ui/3d-card/CardBody.svelte';
+  import CardItem from '$lib/components/ui/3d-card/CardItem.svelte';
 
   let items = [];
   let loading = true;
@@ -114,7 +117,7 @@
 
 <div class="alaska-bg">
   <div class="container mx-auto min-h-screen p-8">
-    <h1 class="mb-8 text-center text-4xl font-bold text-white drop-shadow-lg"></h1>
+    <h1 class="mb-8 text-center text-4xl font-bold text-white drop-shadow-lg">Miscellaneous Items</h1>
 
     {#if loading}
       <div class="text-center text-xl text-gray-600">Loading auctions...</div>
@@ -155,64 +158,77 @@
         </select>
       </div>
 
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         {#each filteredItems as item}
-          <div
-            class="flex flex-col overflow-hidden rounded-lg bg-white bg-opacity-95 shadow-lg transition duration-300 hover:shadow-xl"
-          >
-            {#if item.images?.length > 0 && item.images[0].image}
-              <ResponsiveImage
-                src={item.images[0].image}
-                webpSrc={item.images[0].webp_url || ''}
-                width={item.images[0].width || 0}
-                height={item.images[0].height || 0}
-                alt={item.title}
-                className="h-64 w-full object-cover"
-                fallbackSrc="/placeholder.jpg"
-              />
-            {:else}
-              <img
-                src="/placeholder.jpg"
-                alt={item.title}
-                class="h-64 w-full bg-gray-100 object-cover"
-                on:error={handleImageError}
-              />
-            {/if}
-            <div class="flex flex-grow flex-col p-6">
-              <h2 class="mb-2 text-2xl font-semibold text-blue-500">{item.title}</h2>
-              <span class="mb-2 text-sm font-medium text-gray-500">
-                {item.category.name}
-              </span>
-              <p class="mb-4 line-clamp-2 text-gray-600">{item.description}</p>
-
-              {#if item.timeRemaining}
-                <div class="mb-4 rounded-lg bg-blue-50 p-3">
-                  {#if item.timeRemaining.isExpired}
-                    <p class="text-center font-semibold text-red-600">Auction Ended</p>
-                  {:else}
-                    <p class="text-center font-semibold text-blue-600">
-                      Time Remaining:
-                      {#if item.timeRemaining.days > 0}
-                        {item.timeRemaining.days}d
-                      {/if}
-                      {item.timeRemaining.hours}h
-                      {item.timeRemaining.minutes}m
-                      {item.timeRemaining.seconds}s
-                    </p>
-                  {/if}
-                </div>
+          <CardContainer>
+            <CardBody class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl p-6 shadow-lg text-white">
+              {#if item.timeRemaining && !item.timeRemaining.isExpired && item.timeRemaining.days < 1}
+                <CardItem translateZ={60} class="text-center mb-3">
+                  <span class="bg-white/20 px-3 py-1 rounded-full text-sm">ENDING SOON</span>
+                </CardItem>
               {/if}
-
-              <div class="mt-auto flex items-center justify-between">
-                <span class="text-lg font-bold text-blue-600">{formatPrice(item.current_price)}</span>
-                <a
-                  href="/{item.category?.code?.toLowerCase() || 'misc'}/{item.id}"
-                  class="rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600"
-                  >View Auction</a
-                >
-              </div>
-            </div>
-          </div>
+              
+              <CardItem translateZ={50} class="text-2xl font-bold text-center my-3">
+                {item.title}
+              </CardItem>
+              
+              <CardItem translateZ={40} class="text-center text-3xl font-bold mb-1">
+                {formatPrice(item.current_price)}
+              </CardItem>
+              
+              <CardItem translateZ={35} class="text-center text-blue-100 mb-4 text-sm">
+                Current bid
+              </CardItem>
+              
+              {#if item.images?.length > 0 && item.images[0].image}
+                <CardItem as="div" translateZ={20} class="my-4">
+                  <div class="w-full h-40 overflow-hidden rounded-lg">
+                    <ResponsiveImage
+                      src={item.images[0].image}
+                      webpSrc={item.images[0].webp_url || ''}
+                      width={item.images[0].width || 0}
+                      height={item.images[0].height || 0}
+                      alt={item.title}
+                      className="w-full h-40 object-cover"
+                      fallbackSrc="/placeholder.jpg"
+                    />
+                  </div>
+                </CardItem>
+              {/if}
+              
+              <CardItem translateZ={30} class="line-clamp-2 mb-4 text-center">
+                {item.description}
+              </CardItem>
+              
+              {#if item.timeRemaining}
+                <CardItem translateZ={25} class="mb-5 space-y-2">
+                  <div class="bg-white/20 rounded-lg p-3 text-center">
+                    {#if item.timeRemaining.isExpired}
+                      <p class="font-semibold text-red-200">Auction Ended</p>
+                    {:else}
+                      <p class="font-semibold">
+                        Time Remaining:
+                        {#if item.timeRemaining.days > 0}
+                          {item.timeRemaining.days}d
+                        {/if}
+                        {item.timeRemaining.hours}h
+                        {item.timeRemaining.minutes}m
+                        {item.timeRemaining.seconds}s
+                      </p>
+                    {/if}
+                  </div>
+                </CardItem>
+              {/if}
+              
+              <CardItem as="a" 
+                href="/{item.category?.code?.toLowerCase() || 'misc'}/{item.id}"
+                translateZ={70} 
+                class="block w-full bg-white text-blue-600 py-2 rounded-lg font-medium hover:bg-blue-50 text-center"
+              >
+                View Auction
+              </CardItem>
+            </CardBody>
+          </CardContainer>
         {/each}
       </div>
     {/if}

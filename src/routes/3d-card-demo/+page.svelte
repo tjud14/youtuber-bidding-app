@@ -102,45 +102,45 @@
     <div>
       <h2 class="text-xl font-semibold mb-4">Pricing Card</h2>
       <CardContainer>
-        <CardBody class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl p-6 shadow-lg text-white">
+        <CardBody class="bg-transparent backdrop-blur-sm border border-white/20 rounded-xl p-6 shadow-lg text-gray-800">
           <CardItem translateZ={60} class="text-center">
-            <span class="bg-white/20 px-3 py-1 rounded-full text-sm">POPULAR</span>
+            <span class="bg-blue-500/70 px-3 py-1 rounded-full text-sm text-white">POPULAR</span>
           </CardItem>
           
-          <CardItem translateZ={50} class="text-2xl font-bold text-center my-4">
+          <CardItem translateZ={50} class="text-2xl font-bold text-center my-4 text-blue-600">
             Pro Plan
           </CardItem>
           
-          <CardItem translateZ={40} class="text-center text-4xl font-bold mb-1">
+          <CardItem translateZ={40} class="text-center text-4xl font-bold mb-1 text-gray-800">
             $29
           </CardItem>
           
-          <CardItem translateZ={30} class="text-center text-blue-100 mb-6">
+          <CardItem translateZ={30} class="text-center text-gray-500 mb-6">
             per month, billed annually
           </CardItem>
           
-          <CardItem translateZ={20} class="space-y-2 mb-6">
+          <CardItem translateZ={20} class="space-y-2 mb-6 text-gray-700">
             <div class="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-200" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
               </svg>
               <span>Unlimited projects</span>
             </div>
             <div class="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-200" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
               </svg>
               <span>Advanced analytics</span>
             </div>
             <div class="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-200" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
               </svg>
               <span>24/7 Priority support</span>
             </div>
           </CardItem>
           
-          <CardItem as="button" translateZ={70} class="w-full bg-white text-blue-600 py-2 rounded-lg font-medium hover:bg-blue-50">
+          <CardItem as="button" translateZ={70} class="w-full bg-blue-500 text-white py-2 rounded-lg font-medium hover:bg-blue-600">
             Get Started
           </CardItem>
         </CardBody>
