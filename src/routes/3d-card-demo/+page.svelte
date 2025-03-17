@@ -8,6 +8,117 @@
 <div class="alaska-bg container mx-auto py-16 px-4">
   <h1 class="text-3xl font-bold text-center mb-12 text-white">3D Card Demo</h1>
   
+  <!-- Inline Auction Card with Different Z Values -->
+  <div class="mb-16">
+    <h2 class="text-xl font-semibold mb-4 text-white">Enhanced 3D Auction Card</h2>
+    <div class="max-w-sm mx-auto">
+      <div class="test-card">
+        <CardContainer>
+          <CardBody class="rounded-xl overflow-hidden">
+            <!-- Background Image -->
+            <CardItem as="div" translateZ={-20} class="absolute inset-0 z-0">
+              <img 
+                src="https://images.unsplash.com/photo-1607302524464-3b6250d3ebca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1160&q=80" 
+                alt="Damascus knife" 
+                class="w-full h-full object-cover opacity-40"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 rounded-xl"></div>
+              <div class="absolute -top-1 -left-1 -right-1 h-20 bg-gradient-to-b from-black/80 to-transparent"></div>
+            </CardItem>
+            
+            <!-- Auction Timer Badge -->
+            <CardItem translateZ={100} class="absolute top-4 left-4 z-30">
+              <div class="relative">
+                <span class="bg-red-600/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-white flex items-center gap-1.5">
+                  <span class="inline-block w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                  LIVE AUCTION: 2h 15m
+                </span>
+                <span class="bg-indigo-500/80 px-2 py-0.5 text-xs font-semibold rounded absolute -top-6 -left-1 whitespace-nowrap text-white">
+                  translateZ(100px)
+                </span>
+              </div>
+            </CardItem>
+            
+            <!-- Premium Badge -->
+            <CardItem translateZ={80} class="absolute top-4 right-4 z-30">
+              <div class="relative">
+                <span class="bg-amber-500/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-white">
+                  PREMIUM ITEM
+                </span>
+                <span class="bg-indigo-500/80 px-2 py-0.5 text-xs font-semibold rounded absolute -top-6 -right-1 whitespace-nowrap text-white">
+                  translateZ(80px)
+                </span>
+              </div>
+            </CardItem>
+            
+            <!-- Content Container -->
+            <div class="absolute inset-0 flex flex-col justify-end p-6 z-10">
+              <!-- Title -->
+              <CardItem translateZ={60} class="relative mb-1">
+                <h3 class="text-2xl font-bold text-white">Damascus Steel Knife</h3>
+                <span class="bg-indigo-500/80 px-2 py-0.5 text-xs font-semibold rounded absolute -top-6 left-0 whitespace-nowrap text-white">
+                  translateZ(60px)
+                </span>
+              </CardItem>
+              
+              <!-- Description -->
+              <CardItem translateZ={40} class="relative mb-3">
+                <p class="text-white/80 text-sm">Hand-forged with 200+ layers of folded steel by master craftsmen</p>
+                <span class="bg-indigo-500/80 px-2 py-0.5 text-xs font-semibold rounded absolute -top-6 left-0 whitespace-nowrap text-white">
+                  translateZ(40px)
+                </span>
+              </CardItem>
+              
+              <!-- Price -->
+              <CardItem translateZ={70} class="relative mb-4">
+                <div class="text-3xl font-bold text-amber-400">$349.99</div>
+                <span class="bg-indigo-500/80 px-2 py-0.5 text-xs font-semibold rounded absolute -top-6 left-0 whitespace-nowrap text-white">
+                  translateZ(70px)
+                </span>
+              </CardItem>
+              
+              <!-- Bid Counter -->
+              <CardItem translateZ={30} class="relative mb-4">
+                <div class="flex items-center gap-1 text-white/70 text-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                  </svg>
+                  <span>12 bids so far</span>
+                </div>
+                <span class="bg-indigo-500/80 px-2 py-0.5 text-xs font-semibold rounded absolute -top-6 left-0 whitespace-nowrap text-white">
+                  translateZ(30px)
+                </span>
+              </CardItem>
+              
+              <!-- Action Buttons with different Z values -->
+              <div class="flex gap-3">
+                <!-- Primary Button -->
+                <CardItem translateZ={90} class="relative flex-1">
+                  <button class="w-full bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-md text-sm font-medium">
+                    Place Bid
+                  </button>
+                  <span class="bg-indigo-500/80 px-2 py-0.5 text-xs font-semibold rounded absolute -top-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-white">
+                    translateZ(90px)
+                  </span>
+                </CardItem>
+                
+                <!-- Secondary Button -->
+                <CardItem translateZ={50} class="relative flex-1">
+                  <button class="w-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-4 py-2 rounded-md text-sm font-medium border border-white/30">
+                    View Details
+                  </button>
+                  <span class="bg-indigo-500/80 px-2 py-0.5 text-xs font-semibold rounded absolute -top-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-white">
+                    translateZ(50px)
+                  </span>
+                </CardItem>
+              </div>
+            </div>
+          </CardBody>
+        </CardContainer>
+      </div>
+    </div>
+  </div>
+  
   <!-- Test Card Row - Inline Implementation -->
   <div class="mb-16">
     <h2 class="text-xl font-semibold mb-4 text-white">Inline 3D Card (Fixed Version)</h2>
@@ -332,6 +443,183 @@
       </ul>
       <p class="mt-4">Each item can have different translateZ values to create a depth effect when the card tilts.</p>
       <p class="mt-2">For dramatic effects, try values between 20-120px. You can also combine with translateX, translateY, and rotation.</p>
+    </div>
+  </div>
+
+  <!-- NEW: Aceternity-Style Forest Card Section -->
+  <div class="mt-16">
+    <h2 class="text-3xl font-bold text-center mb-12 text-white">Aceternity-Style Cards</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+      <!-- Using CardContainer/CardBody/CardItem approach -->
+      <div>
+        <h2 class="text-xl font-semibold mb-4 text-white">Forest Card (CardContainer)</h2>
+        <div class="h-[350px]">
+          <CardContainer>
+            <CardBody class="rounded-xl overflow-hidden">
+              <!-- Background with negative Z -->
+              <CardItem translateZ={-50} class="absolute inset-0 opacity-90">
+                <img 
+                  src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
+                  alt="Forest" 
+                  class="w-full h-full object-cover brightness-[0.8]"
+                />
+                <div class="absolute inset-0 bg-black/20"></div>
+              </CardItem>
+              
+              <!-- Title with very high Z -->
+              <CardItem translateZ={120} class="text-3xl font-bold text-white mb-6 text-center absolute inset-x-0 top-1/3 transform -translate-y-1/2">
+                Make things float in air
+              </CardItem>
+              
+              <!-- Description with high Z -->
+              <CardItem translateZ={80} class="text-white/90 mb-8 text-center max-w-xs mx-auto absolute inset-x-0 top-1/2 transform -translate-y-1/2">
+                Hover over this card to unleash the power of CSS perspective
+              </CardItem>
+              
+              <!-- Button with extremely high Z -->
+              <div class="flex justify-center absolute inset-x-0 bottom-10">
+                <CardItem translateZ={150} class="relative">
+                  <button class="px-6 py-2 rounded-full bg-white text-black font-medium hover:bg-gray-100">
+                    Try now →
+                  </button>
+                </CardItem>
+              </div>
+            </CardBody>
+          </CardContainer>
+        </div>
+      </div>
+      
+      <!-- Using InlineCard approach - also completely reworked -->
+      <div>
+        <h2 class="text-xl font-semibold mb-4 text-white">Forest Card (InlineCard)</h2>
+        <div class="h-[350px]">
+          <InlineCard cardStyle="border-radius: 0.75rem; overflow: hidden; transform-style: preserve-3d;">
+            <svelte:fragment slot="default" let:getItemTransform>
+              <!-- Background Image with very negative Z -->
+              <div class="absolute inset-0 z-0" style="transform: {getItemTransform(-70)}">
+                <img 
+                  src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
+                  alt="Forest" 
+                  class="w-full h-full object-cover brightness-[0.8]"
+                />
+                <div class="absolute inset-0 bg-black/20"></div>
+              </div>
+              
+              <!-- Content positioned exactly like the Super Deep Effect card -->
+              <div style="transform: {getItemTransform(120)}" class="text-3xl font-bold text-white text-center absolute inset-x-0 top-1/3 transform -translate-y-1/2">
+                Make things float in air
+              </div>
+              
+              <div style="transform: {getItemTransform(80)}" class="text-white/90 text-center max-w-xs mx-auto absolute inset-x-0 top-1/2 transform -translate-y-1/2">
+                Hover over this card to unleash the power of CSS perspective
+              </div>
+              
+              <div class="absolute inset-x-0 bottom-10 flex justify-center">
+                <div style="transform: {getItemTransform(150)}">
+                  <button class="px-6 py-2 rounded-full bg-white text-black font-medium hover:bg-gray-100">
+                    Try now →
+                  </button>
+                </div>
+              </div>
+            </svelte:fragment>
+          </InlineCard>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Add Additional Aceternity-Style Cards with varying Z heights -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+      <!-- Card with dramatic Z differences -->
+      <div>
+        <h2 class="text-xl font-semibold mb-4 text-white">Dramatic Z Heights</h2>
+        <div class="h-[350px]">
+          <CardContainer>
+            <CardBody class="rounded-xl bg-gradient-to-br from-purple-700/70 to-violet-900/70 p-6 border border-white/10">
+              <CardItem translateZ={-50} class="absolute inset-0 opacity-50">
+                <div class="w-full h-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1),transparent_70%)]"></div>
+              </CardItem>
+              
+              <CardItem translateZ={120} class="text-2xl font-bold text-white mb-6 text-center">
+                Super Deep Effect
+              </CardItem>
+              
+              <CardItem translateZ={80} class="text-white/80 mb-8 text-center">
+                Elements with high Z values (120px) will appear to float much higher than those with lower values
+              </CardItem>
+              
+              <div class="flex justify-center">
+                <CardItem translateZ={150} class="relative">
+                  <span class="absolute -top-8 left-1/2 -translate-x-1/2 bg-purple-500/80 text-white text-xs py-1 px-2 rounded-full">
+                    Z: 150px
+                  </span>
+                  <button class="px-5 py-2 bg-white text-purple-700 rounded-lg font-medium hover:bg-purple-50">
+                    Highest
+                  </button>
+                </CardItem>
+              </div>
+            </CardBody>
+          </CardContainer>
+        </div>
+      </div>
+      
+      <!-- Glass Card Effect -->
+      <div>
+        <h2 class="text-xl font-semibold mb-4 text-white">Glass Card Effect</h2>
+        <div class="h-[350px]">
+          <CardContainer>
+            <CardBody class="rounded-xl overflow-hidden bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20">
+              <CardItem translateZ={-20} class="absolute inset-0">
+                <div class="w-full h-full bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent_70%)]"></div>
+              </CardItem>
+              
+              <div class="absolute inset-0 flex flex-col justify-center items-center p-6">
+                <CardItem translateZ={50} class="text-2xl font-bold text-white mb-3 text-center">
+                  Glass Morphism
+                </CardItem>
+                
+                <CardItem translateZ={30} class="text-white/90 mb-6 text-center max-w-xs">
+                  Combine backdrop-blur with subtle gradients and borders
+                </CardItem>
+                
+                <CardItem translateZ={70} class="px-4 py-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 text-white font-medium">
+                  Explore →
+                </CardItem>
+              </div>
+            </CardBody>
+          </CardContainer>
+        </div>
+      </div>
+      
+      <!-- Layered Elements Card -->
+      <div>
+        <h2 class="text-xl font-semibold mb-4 text-white">Layered Elements</h2>
+        <div class="h-[350px]">
+          <CardContainer>
+            <CardBody class="rounded-xl overflow-hidden bg-gradient-to-br from-blue-900/90 to-indigo-900/90 border border-blue-500/20 p-6">
+              <!-- Background Elements at negative Z -->
+              <CardItem translateZ={-30} class="absolute -bottom-6 -right-6 w-32 h-32 bg-blue-500/20 rounded-full blur-xl"></CardItem>
+              <CardItem translateZ={-20} class="absolute -top-6 -left-6 w-24 h-24 bg-indigo-500/20 rounded-full blur-xl"></CardItem>
+              
+              <!-- Content at different Z heights -->
+              <CardItem translateZ={40} class="text-2xl font-bold text-white mb-4 text-center">
+                Layered Design
+              </CardItem>
+              
+              <CardItem translateZ={30} class="text-white/80 mb-6 text-center">
+                Use negative Z values for background elements and positive values for content
+              </CardItem>
+              
+              <div class="flex justify-between mt-8">
+                <CardItem translateZ={60} class="h-8 w-8 rounded-full bg-blue-500/80"></CardItem>
+                <CardItem translateZ={80} class="h-10 w-10 rounded-full bg-indigo-500/80"></CardItem>
+                <CardItem translateZ={100} class="h-12 w-12 rounded-full bg-violet-500/80"></CardItem>
+                <CardItem translateZ={120} class="h-14 w-14 rounded-full bg-purple-500/80"></CardItem>
+              </div>
+            </CardBody>
+          </CardContainer>
+        </div>
+      </div>
     </div>
   </div>
 </div>
