@@ -27,6 +27,21 @@
               />
               <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10"></div>
             </div>
+            <div class="absolute inset-0 rounded-xl overflow-hidden" style="transform: {getItemTransform(-20)}">
+              <div class="w-full h-full bg-gradient-to-br from-zinc-900 to-black"></div>
+              <div class="absolute inset-0 opacity-20" 
+                   style="background-image: url('data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23333\' fill-opacity=\'0.4\' fill-rule=\'evenodd\'%3E%3Cpath d=\'M0 0h10v10H0V0zm10 10h10v10H10V10z\'/%3E%3C/g%3E%3C/svg%3E');"></div>
+              <div class="absolute inset-0 bg-gradient-to-tr from-black/90 via-black/40 to-red-900/20"></div>
+            </div>
+            
+            <!-- Product Image with highest Z -->
+            <div style="transform: {getItemTransform(90)}" class="absolute top-16 left-1/2 -translate-x-1/2">
+              <img 
+                src="https://i.imgur.com/AKt1vY2.jpg" 
+                alt="Tactical Karambit Knife" 
+                class="h-48 object-contain drop-shadow-2xl"
+              />
+            </div>
             
             <!-- Live Auction Badge with moderate Z -->
             <div style="transform: {getItemTransform(60)}" class="absolute top-6 left-6">
@@ -36,25 +51,28 @@
               </span>
             </div>
             
-            <!-- Premium Badge with similar Z -->
+            <!-- Tactical Badge with similar Z -->
             <div style="transform: {getItemTransform(55)}" class="absolute top-6 right-6">
-              <span class="bg-amber-500/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-white shadow-lg">
-                PREMIUM ITEM
+              <span class="bg-red-700/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-white shadow-lg flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
+                TACTICAL GRADE
               </span>
             </div>
             
             <!-- Centered Content with better spaced Z values -->
             <div class="absolute inset-0 flex flex-col justify-end p-8">
               <div style="transform: {getItemTransform(70)}" class="mb-3">
-                <h3 class="text-2xl font-bold text-white text-shadow">Damascus Steel Knife</h3>
+                <h3 class="text-2xl font-bold text-white text-shadow">Tactical Karambit</h3>
               </div>
               
               <div style="transform: {getItemTransform(45)}" class="mb-4">
-                <p class="text-white/80 text-sm">Hand-forged with 200+ layers of folded steel by master craftsmen</p>
+                <p class="text-white/80 text-sm">Professional-grade tactical combat knife with ergonomic finger ring design</p>
               </div>
               
               <div style="transform: {getItemTransform(80)}" class="mb-6">
-                <div class="text-3xl font-bold text-amber-400 text-shadow">$349.99</div>
+                <div class="text-3xl font-bold text-red-500 text-shadow">$249.99</div>
               </div>
               
               <div style="transform: {getItemTransform(40)}" class="mb-8">
@@ -68,7 +86,7 @@
               
               <div class="flex gap-3">
                 <div style="transform: {getItemTransform(65)}" class="flex-1">
-                  <button class="w-full bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-xl hover:shadow-amber-500/20 transition-all duration-200 hover:translate-y-[-2px]">
+                  <button class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-xl hover:shadow-red-500/20 transition-all duration-200 hover:translate-y-[-2px]">
                     Place Bid
                   </button>
                 </div>
@@ -93,14 +111,16 @@
           <svelte:fragment slot="default" let:getItemTransform>
             <!-- Background with gradient -->
             <div class="absolute inset-0" style="transform: {getItemTransform(-50)}">
-              <div class="w-full h-full bg-gradient-to-br from-gray-900 to-gray-800"></div>
-              <div class="absolute inset-0 opacity-40 mix-blend-overlay" style="background-image: url('data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5z\' fill=\'%23555\' fill-opacity=\'0.2\' fill-rule=\'evenodd\'/%3E%3C/svg%3E');"></div>
+              <div class="w-full h-full bg-gradient-to-br from-gray-900 to-black"></div>
+              <div class="absolute inset-0 opacity-20" 
+                   style="background-image: url('data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23333\' fill-opacity=\'0.4\' fill-rule=\'evenodd\'%3E%3Cpath d=\'M0 0h10v10H0V0zm10 10h10v10H10V10z\'/%3E%3C/g%3E%3C/svg%3E');"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10"></div>
             </div>
             
             <!-- Product Image with high Z -->
             <div style="transform: {getItemTransform(60)}" class="absolute top-8 left-1/2 -translate-x-1/2">
               <img 
-                src="https://images.unsplash.com/photo-1584442145608-eff2c7fac4ec?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1160&q=80" 
+                src="file:///home/konosmgr/Downloads/dylan-taylor-N4UeHvGbPMA-unsplash.jpg" 
                 alt="Hunting knife" 
                 class="h-32 object-contain drop-shadow-2xl"
               />
@@ -221,115 +241,77 @@
     </div>
   </div>
 
-  <!-- Artwork Auction Cards -->
-  <h2 class="text-3xl font-bold text-center mb-12">Artwork Collection</h2>
+  <!-- Alaska Landscape Photography Auction Cards -->
+  <h2 class="text-3xl font-bold text-center mb-12">Alaska Landscapes</h2>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-    <!-- Classic Painting Style -->
+    <!-- Alaska Bay - Nature Photography -->
     <div>
-      <h3 class="text-xl font-semibold mb-4">Classic Gallery Style</h3>
-      <div class="h-[400px]">
-        <InlineCard cardStyle="border-radius: 0.75rem; overflow: hidden; transform-style: preserve-3d;">
+      <h3 class="text-xl font-semibold mb-4">Nature Photography</h3>
+      <div class="h-[500px]">
+        <InlineCard>
           <svelte:fragment slot="default" let:getItemTransform>
-            <!-- Background -->
-            <div class="absolute inset-0 bg-gray-100" style="transform: {getItemTransform(-40)}">
-              <!-- Subtle pattern -->
-              <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
-            </div>
-            
-            <!-- Painting Frame -->
-            <div style="transform: {getItemTransform(10)}" class="absolute inset-6">
-              <div class="w-full h-full bg-amber-100 border-8 border-amber-800 shadow-lg">
-                <!-- Artwork Image -->
-                <img 
-                  style="transform: {getItemTransform(40)}"
-                  src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1445&q=80" 
-                  alt="Classic painting" 
-                  class="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-            
-            <!-- Gallery Tag -->
-            <div style="transform: {getItemTransform(100)}" class="absolute bottom-8 left-1/2 -translate-x-1/2 w-5/6">
-              <div class="bg-white shadow-lg p-3 rounded">
-                <div class="text-center text-gray-800 font-serif">
-                  <h3 class="text-lg font-semibold">European Landscape, 1887</h3>
-                  <p class="text-sm text-gray-600">Oil on canvas • 24" × 36"</p>
-                  <div class="mt-2 text-xl font-bold text-amber-800">Starting bid: $1,250</div>
-                </div>
-                <div class="mt-3">
-                  <button class="w-full bg-amber-800 hover:bg-amber-900 text-white py-2 rounded font-serif">
-                    Bid in Auction
-                  </button>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Auction Badge -->
-            <div style="transform: {getItemTransform(150)}" class="absolute top-4 right-4">
-              <div class="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">
-                LIVE AUCTION
-              </div>
-            </div>
-          </svelte:fragment>
-        </InlineCard>
-      </div>
-    </div>
-    
-    <!-- Modern Art Style -->
-    <div>
-      <h3 class="text-xl font-semibold mb-4">Modern Art Style</h3>
-      <div class="h-[400px]">
-        <InlineCard cardStyle="border-radius: 0.75rem; overflow: hidden; transform-style: preserve-3d; background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);">
-          <svelte:fragment slot="default" let:getItemTransform>
-            <!-- Abstract Background Elements -->
-            <div style="transform: {getItemTransform(-80)}" class="absolute top-10 left-10 w-32 h-32 rounded-full bg-pink-500/20 blur-2xl"></div>
-            <div style="transform: {getItemTransform(-60)}" class="absolute bottom-10 right-10 w-40 h-40 rounded-full bg-blue-500/20 blur-2xl"></div>
-            
-            <!-- Floating Shapes -->
-            <div style="transform: {getItemTransform(30)} rotate(15deg)" class="absolute top-20 right-20 w-12 h-12 bg-yellow-400/40 rounded-sm"></div>
-            <div style="transform: {getItemTransform(25)} rotate(-10deg)" class="absolute bottom-24 left-10 w-8 h-16 bg-indigo-500/40 rounded-full"></div>
-            
-            <!-- Artwork Layer -->
-            <div style="transform: {getItemTransform(50)}" class="absolute inset-0 flex items-center justify-center p-10">
+            <!-- Background image with negative Z -->
+            <div class="absolute inset-0 rounded-xl overflow-hidden" style="transform: {getItemTransform(-20)}">
               <img 
-                src="https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" 
-                alt="Modern art" 
-                class="max-h-full object-contain rounded-md shadow-2xl"
+                src="https://images.unsplash.com/photo-1518128958364-65859d70aa41?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" 
+                alt="Alaska turquoise bay with mountains" 
+                class="w-full h-full object-cover"
               />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
             </div>
             
-            <!-- Information Overlay -->
-            <div style="transform: {getItemTransform(120)}" class="absolute bottom-0 inset-x-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
-              <div class="flex justify-between items-end">
-                <div>
-                  <div class="text-xs text-cyan-300 uppercase tracking-widest mb-1">Abstract Series</div>
-                  <h3 class="text-xl font-bold text-white">Chromatic Fusion #8</h3>
-                  <p class="text-white/70 text-sm">By Alexandra Reeves</p>
-                </div>
-                
-                <div class="text-right">
-                  <div class="text-white text-lg font-bold">$3,850</div>
-                  <div class="text-green-400 text-xs">Reserve met</div>
+            <!-- Limited Edition Badge -->
+            <div style="transform: {getItemTransform(60)}" class="absolute top-6 left-6">
+              <span class="bg-blue-600/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-semibold text-white shadow-lg">
+                LIMITED EDITION
+              </span>
+            </div>
+            
+            <!-- Print Number -->
+            <div style="transform: {getItemTransform(70)}" class="absolute top-6 right-6">
+              <span class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-white border border-white/30">
+                PRINT 3/25
+              </span>
+            </div>
+            
+            <!-- Content overlay -->
+            <div class="absolute inset-0 flex flex-col justify-end p-8">
+              <div style="transform: {getItemTransform(70)}" class="mb-2">
+                <h3 class="text-2xl font-bold text-white text-shadow">Kachemak Bay, Alaska</h3>
+              </div>
+              
+              <div style="transform: {getItemTransform(45)}" class="mb-4">
+                <p class="text-white/90 text-sm">
+                  Spring morning view of turquoise waters and pine forests. Museum-quality print on archival paper.
+                </p>
+              </div>
+              
+              <div style="transform: {getItemTransform(80)}" class="mb-4">
+                <div class="text-3xl font-bold text-white text-shadow">$1,250</div>
+              </div>
+              
+              <div style="transform: {getItemTransform(40)}" class="mb-6">
+                <div class="flex items-center gap-2 text-white/80 text-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <span>Photographed by Michael Stevens</span>
                 </div>
               </div>
               
-              <div class="mt-4">
-                <div class="flex items-center gap-2 mb-2">
-                  <div class="h-1 w-full bg-white/20 rounded-full overflow-hidden">
-                    <div class="h-full w-4/5 bg-cyan-400 rounded-full"></div>
-                  </div>
-                  <span class="text-white/80 text-xs whitespace-nowrap">80%</span>
+              <div class="flex gap-3">
+                <div style="transform: {getItemTransform(100)}" class="flex-1">
+                  <button class="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-3 rounded-lg text-sm font-medium shadow-xl hover:shadow-blue-500/20 transition-all duration-200">
+                    Acquire Now
+                  </button>
                 </div>
                 
-                <div class="flex gap-2">
-                  <button class="flex-1 bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md text-sm font-medium">
-                    Place Bid
-                  </button>
-                  <button class="bg-white/10 hover:bg-white/20 text-white p-2 rounded-md border border-white/30">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+                <div style="transform: {getItemTransform(65)}" class="w-14">
+                  <button class="w-full h-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white rounded-lg flex items-center justify-center border border-white/30">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                     </svg>
                   </button>
                 </div>
@@ -340,100 +322,177 @@
       </div>
     </div>
     
-    <!-- Digital Art NFT Style -->
+    <!-- Alaska Mountains - Adventure Package -->
     <div>
-      <h3 class="text-xl font-semibold mb-4">Digital NFT Style</h3>
-      <div class="h-[400px]">
-        <InlineCard cardStyle="border-radius: 0.75rem; overflow: hidden; transform-style: preserve-3d;">
+      <h3 class="text-xl font-semibold mb-4">Adventure Package</h3>
+      <div class="h-[500px]">
+        <InlineCard>
           <svelte:fragment slot="default" let:getItemTransform>
-            <!-- Dark Background with Glow -->
-            <div class="absolute inset-0 bg-gray-900" style="transform: {getItemTransform(-60)}">
-              <div class="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-black to-blue-900/30"></div>
+            <!-- Background image with negative Z -->
+            <div class="absolute inset-0 rounded-xl overflow-hidden" style="transform: {getItemTransform(-20)}">
+              <img 
+                src="https://images.unsplash.com/photo-1518128958364-65859d70aa41?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" 
+                alt="Alaska turquoise bay with mountains" 
+                class="w-full h-full object-cover"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
             </div>
             
-            <!-- Floating Particles -->
-            <div style="transform: {getItemTransform(-30)}" class="absolute inset-0">
-              <div class="absolute top-1/4 left-1/4 w-1 h-1 bg-white rounded-full animate-pulse"></div>
-              <div class="absolute top-3/4 left-1/2 w-1 h-1 bg-white rounded-full animate-pulse delay-150"></div>
-              <div class="absolute top-1/2 left-3/4 w-1 h-1 bg-white rounded-full animate-pulse delay-300"></div>
-              <div class="absolute top-1/3 left-1/3 w-1 h-1 bg-white rounded-full animate-pulse delay-700"></div>
+            <!-- Expedition logo at negative Z to create depth -->
+            <div style="transform: {getItemTransform(-10)}" class="absolute inset-0 flex items-center justify-center opacity-10">
+              <svg class="w-64 h-64 text-white" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95a15.65 15.65 0 0 0-1.38-3.56A8.03 8.03 0 0 1 18.92 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56A7.987 7.987 0 0 1 5.08 16zm2.95-8H5.08a7.987 7.987 0 0 1 4.33-3.56A15.65 15.65 0 0 0 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z" />
+              </svg>
             </div>
             
-            <!-- Digital Artwork with Glow -->
-            <div style="transform: {getItemTransform(40)}" class="absolute inset-6 rounded-lg overflow-hidden">
-              <div class="relative w-full h-full">
-                <img 
-                  src="https://images.unsplash.com/photo-1621075160523-b936ad96132a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
-                  alt="Digital NFT art" 
-                  class="w-full h-full object-cover"
-                />
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+            <!-- Expedition badge -->
+            <div style="transform: {getItemTransform(60)}" class="absolute top-6 left-6">
+              <div class="bg-green-700/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-semibold text-white shadow-lg flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                </svg>
+                GUIDED EXPEDITION
               </div>
             </div>
             
-            <!-- NFT Details with High Z -->
-            <div style="transform: {getItemTransform(100)}" class="absolute bottom-0 inset-x-0 p-6">
-              <div class="flex justify-between items-start mb-3">
-                <div>
-                  <div class="flex items-center gap-2 mb-1">
-                    <div class="w-6 h-6 rounded-full overflow-hidden border-2 border-purple-500">
-                      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Creator" />
-                    </div>
-                    <span class="text-white/80 text-xs">@crypto_master</span>
+            <!-- Date badge -->
+            <div style="transform: {getItemTransform(50)}" class="absolute top-6 right-6">
+              <div class="bg-white/20 backdrop-blur-sm p-2 rounded-lg border border-white/30 text-center">
+                <div class="text-white text-xs font-medium">JULY</div>
+                <div class="text-white text-xl font-bold">15-22</div>
+                <div class="text-white text-xs">2023</div>
+              </div>
+            </div>
+            
+            <!-- Content -->
+            <div class="absolute inset-0 flex flex-col justify-end p-8">
+              <div style="transform: {getItemTransform(70)}" class="mb-2">
+                <h3 class="text-2xl font-bold text-white text-shadow">Alaska Wilderness Explorer</h3>
+              </div>
+              
+              <div style="transform: {getItemTransform(45)}" class="mb-4">
+                <p class="text-white/90 text-sm">
+                  7-day guided expedition through pristine Alaskan wilderness. Hiking, kayaking, and wildlife photography.
+                </p>
+              </div>
+              
+              <div style="transform: {getItemTransform(55)}" class="mb-4 flex flex-wrap gap-2">
+                <span class="bg-white/20 backdrop-blur-sm px-2 py-0.5 rounded text-xs text-white">Hiking</span>
+                <span class="bg-white/20 backdrop-blur-sm px-2 py-0.5 rounded text-xs text-white">Kayaking</span>
+                <span class="bg-white/20 backdrop-blur-sm px-2 py-0.5 rounded text-xs text-white">Photography</span>
+                <span class="bg-white/20 backdrop-blur-sm px-2 py-0.5 rounded text-xs text-white">4 Spots Left</span>
+              </div>
+              
+              <div style="transform: {getItemTransform(80)}" class="mb-6">
+                <div class="flex justify-between items-center">
+                  <div>
+                    <div class="text-3xl font-bold text-white text-shadow">$3,499</div>
+                    <div class="text-green-400 text-xs">All-inclusive package</div>
                   </div>
-                  <h3 class="text-xl font-bold text-white">Nebula Dreamer #42</h3>
-                </div>
-                
-                <div class="flex items-center gap-2">
-                  <div class="flex">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-400" viewBox="0 0 20 20" fill="currentColor">
-                      <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                      <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
-                    </svg>
-                    <span class="text-white/70 text-xs ml-1">1.2k</span>
-                  </div>
-                  <div class="h-4 w-px bg-white/20"></div>
-                  <div class="flex">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-                    </svg>
-                    <span class="text-white/70 text-xs ml-1">357</span>
+                  <div class="flex -space-x-2">
+                    <img class="w-8 h-8 rounded-full border-2 border-gray-800" src="https://randomuser.me/api/portraits/women/42.jpg" alt="User" />
+                    <img class="w-8 h-8 rounded-full border-2 border-gray-800" src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" />
+                    <div class="w-8 h-8 rounded-full bg-blue-600 border-2 border-gray-800 flex items-center justify-center text-xs text-white">+2</div>
                   </div>
                 </div>
               </div>
               
-              <div class="flex justify-between items-center mb-4">
-                <div>
-                  <div class="text-white/60 text-xs">Current Bid</div>
-                  <div class="flex items-center">
-                    <svg class="h-4 w-4 text-cyan-400 mr-1" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M11.944 17.97L4.58 13.62 11.943 24l7.37-10.38-7.372 4.35h.003zM12.056 0L4.69 12.223l7.365 4.354 7.365-4.35L12.056 0z"/>
-                    </svg>
-                    <span class="text-xl font-bold text-white">0.45 ETH</span>
-                  </div>
+              <div class="flex gap-3">
+                <div style="transform: {getItemTransform(100)}" class="flex-1">
+                  <button class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg text-sm font-medium shadow-xl transition-all duration-200">
+                    Reserve Spot
+                  </button>
                 </div>
                 
-                <div>
-                  <div class="text-white/60 text-xs text-right">Ends in</div>
-                  <div class="text-white font-mono">09:23:14</div>
+                <div style="transform: {getItemTransform(65)}" class="w-14">
+                  <button class="w-full h-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white rounded-lg flex items-center justify-center border border-white/30">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </button>
                 </div>
               </div>
             </div>
-            
-            <!-- Bid Button with highest Z -->
-            <div style="transform: {getItemTransform(150)}" class="absolute bottom-6 inset-x-6">
-              <button class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white py-2.5 rounded-lg font-medium">
-                Place a Bid
-              </button>
+          </svelte:fragment>
+        </InlineCard>
+      </div>
+    </div>
+    
+    <!-- Alaska Real Estate -->
+    <div>
+      <h3 class="text-xl font-semibold mb-4">Luxury Property</h3>
+      <div class="h-[500px]">
+        <InlineCard>
+          <svelte:fragment slot="default" let:getItemTransform>
+            <!-- Background image with negative Z -->
+            <div class="absolute inset-0 rounded-xl overflow-hidden" style="transform: {getItemTransform(-20)}">
+              <img 
+                src="https://images.unsplash.com/photo-1518128958364-65859d70aa41?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" 
+                alt="Alaska turquoise bay with mountains" 
+                class="w-full h-full object-cover"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent"></div>
             </div>
             
-            <!-- Authenticity Badge -->
-            <div style="transform: {getItemTransform(120)}" class="absolute top-4 right-4">
-              <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-3 py-1 flex items-center gap-1">
-                <svg class="h-3 w-3 text-cyan-400" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M11.944 17.97L4.58 13.62 11.943 24l7.37-10.38-7.372 4.35h.003zM12.056 0L4.69 12.223l7.365 4.354 7.365-4.35L12.056 0z"/>
-                </svg>
-                <span class="text-white text-xs font-medium">Verified</span>
+            <!-- Property type badge -->
+            <div style="transform: {getItemTransform(60)}" class="absolute top-6 left-6">
+              <div class="bg-indigo-600/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-semibold text-white shadow-lg">
+                LUXURY WATERFRONT
+              </div>
+            </div>
+            
+            <!-- Property details overlay with glass effect -->
+            <div style="transform: {getItemTransform(40)}" class="absolute inset-x-6 bottom-6 bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20">
+              <div style="transform: {getItemTransform(70)}" class="mb-3">
+                <h3 class="text-2xl font-bold text-white">Kachemak Bay Retreat</h3>
+                <p class="text-white/80 text-sm">Seward, Alaska</p>
+              </div>
+              
+              <div style="transform: {getItemTransform(50)}" class="mb-4 grid grid-cols-2 gap-4">
+                <div class="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  </svg>
+                  <span class="text-white">4,850 sq ft</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                  </svg>
+                  <span class="text-white">4 Bedrooms</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <span class="text-white">Built 2022</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                  </svg>
+                  <span class="text-white">25 Acres</span>
+                </div>
+              </div>
+              
+              <div style="transform: {getItemTransform(80)}" class="mb-4">
+                <div class="text-3xl font-bold text-white">$2,850,000</div>
+              </div>
+              
+              <div style="transform: {getItemTransform(100)}" class="flex gap-3">
+                <button class="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-lg">
+                  Schedule Viewing
+                </button>
+                <div style="transform: {getItemTransform(65)}" class="flex-1">
+                  <button class="w-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-4 py-2 rounded-lg text-sm font-medium border border-white/30">
+                    View Details
+                  </button>
+                </div>
+                <div style="transform: {getItemTransform(65)}" class="flex-1">
+                  <button class="w-full bg-white/20 hover:bg-red-900/30 backdrop-blur-sm text-white px-4 py-2 rounded-lg text-sm font-medium border border-red-500/30">
+                    View Details
+                  </button>
+                </div>
               </div>
             </div>
           </svelte:fragment>

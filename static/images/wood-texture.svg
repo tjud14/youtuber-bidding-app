@@ -1,0 +1,11 @@
+<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="wood-grain" width="100" height="100" patternUnits="userSpaceOnUse">
+      <!-- Wood grain lines -->
+      <rect width="100" height="100" fill="#111" fill-opacity="0.05"/>
+      <path d="M0,10 Q25,5 50,10 T100,10 M0,30 Q25,25 50,30 T100,30 M0,50 Q25,45 50,50 T100,50 M0,70 Q25,65 50,70 T100,70 M0,90 Q25,85 50,90 T100,90" stroke="#ffffff" stroke-width="0.75" stroke-opacity="0.15" fill="none"/>
+      <path d="M0,20 Q35,15 70,20 T100,20 M0,40 Q35,35 70,40 T100,40 M0,60 Q35,55 70,60 T100,60 M0,80 Q35,75 70,80 T100,80" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.1" fill="none"/>
+    </pattern>
+  </defs>
+  <rect width="100" height="100" fill="url(#wood-grain)"/>
+</svg> 

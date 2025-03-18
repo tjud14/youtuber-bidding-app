@@ -1,0 +1,212 @@
+# Enhanced 3D Card Component Guide
+
+This guide explains how to use the improved InlineCard component for creating 3D cards with customizable depth effects.
+
+## Key Differences from the Original Version
+
+The new component adds important customization options:
+
+- **React-Like Hover Effects**: Elements can now remain flat until hover, then dramatically pop out
+- **Customizable Z Behavior**: Control how different Z ranges behave in both resting and hover states
+- **Adjustable Hover Amplification**: Control how much Z values increase on hover
+- **Configurable Scale Properties**: Set both initial and hover scales
+
+## New Component Props
+
+| Prop | Default | Description |
+|------|---------|-------------|
+| `class_name` | `''` | Custom classes for the wrapper |
+| `cardStyle` | `''` | Inline styles for the card |
+| `zBehavior` | `'hybrid'` | Z-depth behavior mode: 'flat', 'hybrid', or 'subtle' |
+| `hoverZScale` | `1.8` | How much to amplify Z values on hover |
+| `initialScale` | `1` | Initial card scale |
+| `hoverScale` | `1.05` | Card scale on hover |
+
+## Basic Usage
+
+```svelte
+<script>
+  import InlineCard from '$lib/components/ui/3d-card/InlineCard.svelte';
+</script>
+
+<div class="h-[400px]">
+  <InlineCard>
+    <svelte:fragment slot="default" let:getItemTransform>
+      <!-- Background with negative Z -->
+      <div class="absolute inset-0" style="transform: {getItemTransform(-50)}">
+        <!-- Background content -->
+      </div>
+      
+      <!-- Content with positive Z -->
+      <div style="transform: {getItemTransform(100)}">
+        Content that floats higher
+      </div>
+    </svelte:fragment>
+  </InlineCard>
+</div>
+```
+
+## Advanced Usage with Custom Parameters
+
+```svelte
+<InlineCard 
+  zBehavior="hybrid"
+  hoverZScale={2.2} 
+  initialScale={0.98} 
+  hoverScale={1.08}
+  cardStyle="border-radius: 0.75rem; overflow: hidden;"
+  class_name="my-custom-card"
+>
+  <svelte:fragment slot="default" let:getItemTransform>
+    <!-- Elements here -->
+  </svelte:fragment>
+</InlineCard>
+```
+
+## Z-Behavior Modes
+
+The component supports three different Z-behavior modes:
+
+1. **'flat'**: Similar to Aceternity UI - all elements have no Z depth initially, and only move to their Z positions on hover
+2. **'hybrid'**: Background elements (negative Z) maintain depth at rest, while foreground elements (positive Z) only pop out on hover
+3. **'subtle'**: Background elements maintain full depth, foreground elements have reduced depth (20%) at rest, full depth on hover
+
+## Creating Layered 3D Cards
+
+```svelte
+<InlineCard zBehavior="hybrid" hoverZScale={2.0}>
+  <svelte:fragment slot="default" let:getItemTransform>
+    <!-- Deep background (always visible, -200px on hover) -->
+    <div class="absolute inset-0" style="transform: {getItemTransform(-100)}">
+      <div class="w-full h-full bg-gradient-to-br from-gray-900 to-black"></div>
+    </div>
+    
+    <!-- Image layer (always visible, -100px on hover) -->
+    <div class="absolute inset-0" style="transform: {getItemTransform(-50)}">
+      <img src="/path/to/image.jpg" alt="Background" class="w-full h-full object-cover opacity-80" />
+    </div>
+    
+    <!-- Overlay (always visible, -40px on hover) -->
+    <div class="absolute inset-0" style="transform: {getItemTransform(-20)}">
+      <div class="w-full h-full bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+    </div>
+    
+    <!-- Content container -->
+    <div class="absolute inset-0 flex flex-col justify-end p-6">
+      <!-- Title (flat at rest, 200px on hover) -->
+      <div style="transform: {getItemTransform(100)}" class="mb-4">
+        <h2 class="text-3xl font-bold text-white">Card Title</h2>
+      </div>
+      
+      <!-- Description (flat at rest, 120px on hover) -->
+      <div style="transform: {getItemTransform(60)}" class="mb-6">
+        <p class="text-white/80">Card description text</p>
+      </div>
+      
+      <!-- Button (flat at rest, 300px on hover) -->
+      <div style="transform: {getItemTransform(150)}">
+        <button class="bg-white text-black px-4 py-2 rounded-lg shadow-lg">
+          Call to Action
+        </button>
+      </div>
+    </div>
+  </svelte:fragment>
+</InlineCard>
+```
+
+## Common Patterns and Techniques
+
+### 1. Staggered Z-Heights for UI Elements
+Create a hierarchy of importance with progressively higher Z values:
+
+```svelte
+<div style="transform: {getItemTransform(40)}">Less important text</div>
+<div style="transform: {getItemTransform(80)}">Important information</div>
+<div style="transform: {getItemTransform(120)}">Primary call to action</div>
+```
+
+### 2. Adding Additional Transforms
+You can add extra transforms as the second parameter:
+
+```svelte
+<div style="transform: {getItemTransform(100, 'translateY(-10px) rotateZ(2deg)')}">
+  Element with multiple transforms
+</div>
+```
+
+### 3. Creating Dramatic Depth with Z Ranges
+Use a wide range of Z values for more pronounced effects:
+
+- Background elements: -150 to -30
+- Mid-ground elements: -20 to 20
+- Foreground content: 40 to 80
+- Focus elements: 100 to 200
+
+### 4. Enhancing Visual Depth
+
+```svelte
+<!-- Add shadows to elements with high Z values -->
+<div style="transform: {getItemTransform(120)}" class="shadow-xl">
+  Content with shadow
+</div>
+
+<!-- Add blur to distant elements -->
+<div style="transform: {getItemTransform(-100)}" class="blur-[1px]">
+  Slightly blurred background
+</div>
+```
+
+## Recommended Z-Value Guidelines
+
+| Element Type | Recommended Z Range | Notes |
+|--------------|---------------------|-------|
+| Background gradient | -150 to -100 | Deepest layer |
+| Background image | -80 to -50 | Behind content but visible |
+| Overlay/vignette | -40 to -20 | Adds contrast for text |
+| Secondary content | 40 to 80 | Subtly raised |
+| Main content/title | 90 to 120 | Clearly floating |
+| Primary buttons/CTAs | 140 to 200 | Maximum projection |
+
+## Performance Considerations
+
+- Limit the number of transformed elements (under 20 per card)
+- Use will-change: transform sparingly (already applied to card)
+- Consider reducing effects on mobile devices
+- Test performance with many cards on the page
+
+## Implementation Details
+
+The component uses a smart `getItemTransform` function that behaves differently based on the `zBehavior` mode:
+
+```javascript
+function getItemTransform(z, additionalTransform = '') {
+  let zAmount;
+  
+  if (zBehavior === 'flat') {
+    // Only apply Z transforms on hover (Aceternity UI style)
+    zAmount = isHovering ? z : 0;
+  } 
+  else if (zBehavior === 'hybrid') {
+    // Background elements (negative Z) maintain depth
+    // Foreground elements (positive Z) only pop out on hover
+    if (z < 0) {
+      zAmount = isHovering ? z * hoverZScale : z;
+    } else {
+      zAmount = isHovering ? z : 0;
+    }
+  }
+  else if (zBehavior === 'subtle') {
+    // Background elements maintain full depth
+    // Foreground elements have subtle depth (20%) at rest
+    if (z < 0) {
+      zAmount = isHovering ? z * hoverZScale : z;
+    } else {
+      zAmount = isHovering ? z : z * 0.2;
+    }
+  }
+  
+  return `translateZ(${zAmount}px) ${additionalTransform}`.trim();
+}
+```
+
+The enhanced component maintains the same core functionality as the original but provides more nuanced control over the 3D effect's behavior, allowing for different depth behaviors in both resting and hover states.
