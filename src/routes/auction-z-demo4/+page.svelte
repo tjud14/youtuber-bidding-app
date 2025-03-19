@@ -86,24 +86,24 @@
   
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
       {#each cards as card}
-        <div class="h-[500px] card-container rounded-2xl">
+        <div class="h-[500px] card-container">
           <ReactiveExplicitZCard
             hoverZScale={hoverScale}
             initialScale={1}
             hoverScale={1.1}
-            cardStyle="border-radius: 1rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0); overflow: hidden;"
+            cardStyle="border-radius: 1rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); overflow: hidden;"
             on:hoverchange={(e) => handleHoverChange(card.id, e)}
           >
             <svelte:fragment slot="default" let:isHovering let:getItemStyle>
               <!-- Background image with negative Z -->
-              <div class="absolute inset-0 rounded-2xl overflow-hidden"
+              <div class="absolute inset-0 rounded-xl overflow-hidden"
                    style:transform={getItemStyle(zValues.background).transform}
                    style:transition={getItemStyle(zValues.background).transition}>
-                <div class="w-full h-full bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl"></div>
+                <div class="w-full h-full bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl"></div>
               </div>
               
               <!-- Image layer (-40) -->
-              <div class="absolute inset-0 rounded-2xl overflow-hidden"
+              <div class="absolute inset-0 rounded-xl overflow-hidden"
                    style:transform={getItemStyle(zValues.image).transform}
                    style:transition={getItemStyle(zValues.image).transition}>
                 <img 
@@ -132,8 +132,10 @@
                 </span>
               </div>
               
-              <!-- Content overlay with rounded bottom corners -->
-              <div class="absolute inset-0 flex flex-col justify-end p-8 rounded-2xl overflow-hidden">
+              <!-- Content overlay with rounded corners -->
+              <div class="absolute inset-0 flex flex-col justify-end p-8 rounded-xl overflow-hidden"
+                   style:transform={getItemStyle(zValues.container).transform}
+                   style:transition={getItemStyle(zValues.container).transition}>
                 <!-- Title (60) -->
                 <div style:transform={getItemStyle(zValues.title).transform}
                      style:transition={getItemStyle(zValues.title).transition}
@@ -213,11 +215,16 @@
     }
     
     .text-shadow-sharp {
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
       font-weight: 700;
       letter-spacing: -0.01em;
     }
     
+    /* Fix 3D clipping issues */
+    .card-container {
+      perspective: 1500px;
+      transform-style: preserve-3d;
+    }
     
     /* Force 3D Context with CSS */
     :global(.explicit-card-wrapper),
