@@ -103,6 +103,8 @@
       align-items: center;
       width: 100%;
       height: 100%;
+      border-radius: 1rem;
+      overflow: visible !important;
     }
     
     .enhanced-card {
@@ -112,11 +114,18 @@
       transform-style: preserve-3d;
       transition: transform 0.2s ease-out;
       will-change: transform;
+      border-radius: 1rem;
+      overflow: visible !important;
     }
     
     /* Force 3D rendering on all elements */
     .enhanced-card :global(*) {
-      transform-style: preserve-3d;
+      transform-style: preserve-3d !important;
       backface-visibility: visible;
+    }
+    
+    /* Fix specific content containers that might have overflow:hidden */
+    .enhanced-card :global(.absolute) {
+      overflow: visible !important;
     }
   </style>

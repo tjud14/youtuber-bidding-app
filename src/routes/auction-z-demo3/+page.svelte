@@ -1,5 +1,5 @@
 <script>
-    import Enhanced3DCard from '$lib/components/ui/3d-card/hybridcards/Enchanced3DCard.svelte';
+    import Enhanced3DCard from '$lib/components/ui/3d-card/hybridcards/Enhanced3DCard.svelte';
     
     // Demo State
     let currentHoverCard = null;
