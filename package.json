@@ -29,6 +29,8 @@
     "vite": "^6.0.0"
   },
   "dependencies": {
-    "chart.js": "^3.9.1"
+    "chart.js": "^3.9.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^1.14.0"
   }
 }
