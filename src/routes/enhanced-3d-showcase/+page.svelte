@@ -33,6 +33,7 @@
       discount: '24% OFF',
       image: 'https://images.unsplash.com/photo-1541140532154-b024d705b90a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2836&q=80',
       color: 'blue',
+      glowColor: '#3b82f6',
       stock: 12
     },
     {
@@ -45,6 +46,7 @@
       discount: '6% OFF',
       image: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2065&q=80',
       color: 'pink',
+      glowColor: '#ec4899',
       stock: 8
     },
     {
@@ -57,6 +59,7 @@
       discount: '24% OFF',
       image: 'https://images.unsplash.com/photo-1618329340733-fe6fb0fc2f34?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80',
       color: 'green',
+      glowColor: '#10b981',
       stock: 5
     }
   ];
@@ -91,25 +94,18 @@
     {#each products as product}
       <div class="h-[480px] card-container">
         <Enhanced3DCard
-          hoverZScale={2.2}
+          hoverZScale={2.5}
           initialScale={1}
-          hoverScale={1.1}
+          hoverScale={1.08}
           maxRotation={12}
           perspective={1800}
           transitionDuration={0.3}
           transitionEasing="cubic-bezier(0.23, 1, 0.32, 1)"
-          cardStyle="border-radius: 1rem; overflow: visible; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0);"
+          cardStyle="border-radius: 1rem; overflow: visible; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);"
           className="gaming-card"
           on:hoverchange={(e) => handleHoverChange(product.id, e)}
         >
           <svelte:fragment slot="default" let:isHovering let:getItemStyle>
-            <!-- Animated background pattern with parallax -->
-            <div class="absolute inset-0 rounded-xl overflow-hidden"
-                 style:transform={getItemStyle(zValues.backgroundPattern, {delay: 0.05}).transform}
-                 style:transition={getItemStyle(zValues.backgroundPattern, {delay: 0.05}).transition}>
-              <div class="w-full h-full pattern-dots opacity-10"></div>
-            </div>
-            
             <!-- Base card with color gradients -->
             <div class="absolute inset-0 rounded-xl overflow-hidden"
                  style:transform={getItemStyle(zValues.cardBackground).transform}
@@ -117,37 +113,51 @@
               <div class="w-full h-full bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl"></div>
             </div>
             
-            <!-- Product image with subtle parallax effect -->
+            <!-- Animated background pattern with parallax -->
             <div class="absolute inset-0 rounded-xl overflow-hidden"
-                 style:transform={getItemStyle(zValues.image, {
-                   xOffset: isHovering ? -5 : 0,
-                   yOffset: isHovering ? -5 : 0,
-                   customDuration: 0.6,
-                   delay: 0.1
-                 }).transform}
-                 style:transition={getItemStyle(zValues.image, {
-                   customDuration: 0.6,
-                   delay: 0.1
-                 }).transition}>
+                 style:transform={getItemStyle(zValues.backgroundPattern, {delay: 0.05}).transform}
+                 style:transition={getItemStyle(zValues.backgroundPattern, {delay: 0.05}).transition}>
+              <div class="w-full h-full pattern-dots opacity-10"></div>
+            </div>
+            
+            <!-- Product image with contained glow effect -->
+            <div class="absolute inset-0 rounded-xl overflow-hidden"
+                  style:transform={getItemStyle(zValues.image, {
+                    xOffset: isHovering ? -5 : 0,
+                    yOffset: isHovering ? -5 : 0,
+                    customDuration: 0.6,
+                    delay: 0.1
+                  }).transform}
+                  style:transition={getItemStyle(zValues.image, {
+                    customDuration: 0.6,
+                    delay: 0.1
+                  }).transition}>
+              <!-- Image -->
               <img 
                 src={product.image} 
                 alt={product.name}
                 class="w-full h-full object-cover filter brightness-[0.85] contrast-[1.1]"
               />
+              
+              <!-- Gradient overlay -->
               <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+              
+              <!-- Glow effect - More visible version -->
+              {#if isHovering}
+                <div class="absolute inset-0" 
+                      style:transform={getItemStyle(zValues.glow).transform}
+                      style:transition={getItemStyle(zValues.glow, {
+                        customDuration: 0.8,
+                        customEasing: 'cubic-bezier(0.19, 1, 0.22, 1)'
+                      }).transition}>
+                  <div class="w-full h-full" 
+                        style="background: radial-gradient(circle at center, {product.glowColor} 0%, transparent 70%); 
+                              opacity: 0.25; 
+                              mix-blend-mode: screen;">
+                  </div>
+                </div>
+              {/if}
             </div>
-            
-            <!-- Glow effect on hover -->
-            {#if isHovering}
-              <div class="absolute inset-0 rounded-xl overflow-hidden"
-                   style:transform={getItemStyle(zValues.glow).transform}
-                   style:transition={getItemStyle(zValues.glow, {
-                     customDuration: 0.8,
-                     customEasing: 'cubic-bezier(0.19, 1, 0.22, 1)'
-                   }).transition}>
-                <div class="w-full h-full radial-glow opacity-10" style="background-color: {product.color === 'blue' ? '#0070f3' : product.color === 'pink' ? '#f81ce5' : '#00c9a7'}"></div>
-              </div>
-            {/if}
             
             <!-- Discount Badge with pop effect -->
             {#if product.discount}
