@@ -49,7 +49,7 @@
       price: 2499.99,
       originalPrice: 3499.99,
       discount: '29% OFF',
-      image: 'https://images.unsplash.com/photo-1617606003139-e3300dea8494?q=80&w=1470&auto=format&fit=crop',
+      image: 'https://images.unsplash.com/photo-1741893041975-94a0e8656209?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       color: 'indigo',
       glowColor: '#818cf8',
       stock: 3
@@ -122,7 +122,7 @@
     <div class="flex justify-center items-center h-[600px]">
       <div class="w-[400px] h-[500px] card-container">
         <Enhanced3DCard
-          hoverZScale={3}
+          hoverZScale={1.8}
           initialScale={1}
           hoverScale={1.1}
           maxRotation={15}
