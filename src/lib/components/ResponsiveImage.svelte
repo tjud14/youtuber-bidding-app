@@ -1,38 +1,37 @@
 <script>
   // Props for the component
-  export let src = ''; // Original image URL (fallback)
-  export let webpSrc = ''; // WebP image URL
-  export let width = 0; // Image width in pixels
-  export let height = 0; // Image height in pixels
-  export let alt = ''; // Alt text for accessibility
-  export let className = ''; // Optional CSS class
-  export let objectFit = 'cover'; // CSS object-fit property
-  export let fallbackSrc = '/placeholder.jpg'; // Fallback image if src fails to load
-
-  // Calculate aspect ratio for use with object-fit
+  export let src = '';
+  export let webpSrc = '';
+  export let width = 0;
+  export let height = 0;
+  export let alt = '';
+  export let className = '';
+  export let objectFit = 'cover';
+  export let fallbackSrc = '/placeholder.jpg';
+  export let fillContainer = false; // New prop for card layouts
+  
+  // Calculate aspect ratio
   const aspectRatio = width && height ? `${width} / ${height}` : undefined;
-
-  // Handle image loading errors
+  
   function handleError(e) {
     e.currentTarget.src = fallbackSrc;
   }
 </script>
 
-<picture>
-  <!-- WebP version for browsers that support it -->
+<picture class={fillContainer ? "w-full h-full" : ""}>
   {#if webpSrc}
     <source srcset={webpSrc} type="image/webp" />
   {/if}
-  
-  <!-- Original image as fallback -->
   <img
     src={src}
     {alt}
-    class={className}
+    class={`${className} ${fillContainer ? "w-full h-full" : ""}`}
     loading="lazy"
     width={width || null}
     height={height || null}
-    style={aspectRatio ? `aspect-ratio: ${aspectRatio}; object-fit: ${objectFit};` : ''}
+    style={fillContainer 
+      ? `object-fit: ${objectFit}; position: ${fillContainer ? 'absolute' : 'relative'}; inset: 0;` 
+      : aspectRatio ? `aspect-ratio: ${aspectRatio}; object-fit: ${objectFit};` : ''}
     on:error={handleError}
   />
 </picture>
@@ -42,4 +41,9 @@
     display: block;
     max-width: 100%;
   }
-</style> 
+  
+  picture.w-full, picture.h-full {
+    position: relative;
+    display: block;
+  }
+</style>

@@ -154,7 +154,7 @@
       startingPrice: item.starting_price || item.current_price * 0.7,
       label: label,
       image: imageUrl,
-      
+      images: item.images,
       color: color,
       glowColor: glow,
       bids: item.bids?.length || 0,

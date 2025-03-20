@@ -212,6 +212,7 @@
             alt={item.name}
             className="w-full h-full object-cover rounded-xl"
             fallbackSrc="/placeholder.jpg"
+            fillContainer={true}
           />
         {:else if item.image}
           <img 
