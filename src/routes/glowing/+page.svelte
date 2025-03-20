@@ -1,6 +1,6 @@
 <script>
   import { Box, Lock, Search, Settings, Sparkles } from 'lucide-svelte';
-  import GridItem from '@/components/ui/Glowing-Effect/GlowingEffect.svelte';
+  import GridItem from '$lib/components/ui/Glowing-Effect/GridItem.svelte';
 </script>
 
 <ul

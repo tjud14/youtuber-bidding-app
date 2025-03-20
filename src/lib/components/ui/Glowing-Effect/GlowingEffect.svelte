@@ -2,7 +2,7 @@
     import { onMount, onDestroy } from 'svelte';
     import { tweened } from 'svelte/motion';
     import { cubicOut } from 'svelte/easing';
-    import { cn } from "@/lib/utils";
+    import { cn } from '$lib/utils/utils';
     
     // Props with default values
     export let blur = 0;

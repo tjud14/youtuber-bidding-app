@@ -1,6 +1,6 @@
 <script>
-  import { cn } from '@/lib/utils';
-  import GlowingEffect from '@/components/ui/Glowing-Effect/GlowingEffect.svelte';
+  import { cn } from '$lib/utils/utils';
+  import GlowingEffect from '$lib/components/ui/Glowing-Effect/GlowingEffect.svelte';
 
   // Props
   export let area = '';
