@@ -16,13 +16,23 @@
 
 <NicknameCheckWrapper currentPath={$page.url.pathname}>
   <BeamsBackground intensity="medium">
-    <div class="w-full min-h-screen">
+    <div class="flex flex-col min-h-screen w-full">
       <Navbar />
-      <slot />
+      <main class="flex-grow w-full">
+        <slot />
+      </main>
     </div>
   </BeamsBackground>
 </NicknameCheckWrapper>
 
 <style>
-  /* Add any global styles here if needed */
+  /* Make sure body and html allow scrolling */
+  :global(html, body) {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 </style>

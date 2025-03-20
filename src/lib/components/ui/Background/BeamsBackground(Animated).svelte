@@ -130,21 +130,27 @@
       // Update canvas size and create beams
       const updateCanvasSize = () => {
         const dpr = window.devicePixelRatio || 1;
-        canvas.width = window.innerWidth * dpr;
-        canvas.height = window.innerHeight * dpr;
-        canvas.style.width = `${window.innerWidth}px`;
-        canvas.style.height = `${window.innerHeight}px`;
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        
+        canvas.width = viewportWidth * dpr;
+        canvas.height = viewportHeight * dpr;
+        canvas.style.width = `${viewportWidth}px`;
+        canvas.style.height = `${viewportHeight}px`;
         ctx.scale(dpr, dpr);
   
+        // Adjust beams for the new dimensions
         const totalBeams = MINIMUM_BEAMS * 1.5;
         beams = Array.from({ length: totalBeams }, () =>
-          createBeam(canvas.width, canvas.height)
+          createBeam(viewportWidth, viewportHeight)
         );
       };
   
       updateCanvasSize();
+      
+      // Handle window resize and scroll events
       window.addEventListener('resize', updateCanvasSize);
-  
+      
       // Start animations
       animate();
       updateOpacity();
@@ -164,19 +170,19 @@
     });
   </script>
   
-  <div class={cn("relative min-h-screen w-full overflow-hidden bg-neutral-950", className)}>
+  <div class={cn("relative w-full overflow-x-hidden bg-neutral-950", className)}>
     <canvas 
       bind:this={canvas} 
-      class="absolute inset-0" 
+      class="fixed inset-0 w-full h-full" 
       style="filter: blur(15px);"
     ></canvas>
   
     <div 
-      class="absolute inset-0 bg-neutral-950/5"
+      class="fixed inset-0 w-full h-full bg-neutral-950/5"
       style="backdrop-filter: blur(50px); opacity: {$opacity};"
     ></div>
   
-    <div class="relative z-10 flex h-screen w-full items-center justify-center">
+    <div class="relative z-10 w-full">
       <slot></slot>
     </div>
   </div>

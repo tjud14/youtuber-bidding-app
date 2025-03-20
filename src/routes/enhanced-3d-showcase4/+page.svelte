@@ -1,98 +1,100 @@
 <script>
-    import Enhanced3DCard from '$lib/components/ui/3d-card/hybridcards/Enhanced3DCard.svelte';
-    
-    // Demo State
-    let currentHoverCard = null;
-    
-    // More diverse Z-values to demonstrate greater depths
-    const zValues = {
-      background: -200,
-      backgroundPattern: -170,
-      cardBackground: -150,
-      image: -50,
-      glow: -45, // Move glow closer to image layer to ensure it's visible
-      badge: 40,
-      container: 30,
-      title: 80,
-      subtitle: 60,
-      specs: 70,
-      price: 100,
-      button: 50,
-      buttonIcon: 65
-    };
-    
-    // Products to showcase
-    const products = [
-      {
-        id: 'gaming-keyboard',
-        name: 'HyperX Alloy Elite RGB',
-        subtitle: 'Mechanical Gaming Keyboard',
-        specs: ['Cherry MX Red Switches', 'RGB Per-Key Lighting', 'Full N-Key Rollover'],
-        price: 129.99,
-        originalPrice: 169.99,
-        discount: '24% OFF',
-        image: 'https://images.unsplash.com/photo-1541140532154-b024d705b90a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2836&q=80',
-        color: 'blue',
-        glowColor: '#3b82f6',
-        stock: 12
-      },
-      {
-        id: 'gaming-mouse',
-        name: 'Logitech G Pro X Superlight',
-        subtitle: 'Wireless Gaming Mouse',
-        specs: ['Ultra-Lightweight 63g', '25K DPI HERO Sensor', '70hr Battery Life'],
-        price: 149.99,
-        originalPrice: 159.99,
-        discount: '6% OFF',
-        image: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2065&q=80',
-        color: 'pink',
-        glowColor: '#ec4899',
-        stock: 8
-      },
-      {
-        id: 'gaming-headset',
-        name: 'SteelSeries Arctis Pro',
-        subtitle: 'Wireless Gaming Headset',
-        specs: ['Hi-Res Audio Certified', 'Dual-Wireless System', 'ClearCast Microphone'],
-        price: 249.99,
-        originalPrice: 329.99,
-        discount: '24% OFF',
-        image: 'https://images.unsplash.com/photo-1618329340733-fe6fb0fc2f34?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80',
-        color: 'green',
-        glowColor: '#10b981',
-        stock: 5
-      }
-    ];
-    
-    // Handle hover state changes with card-specific effects
-    function handleHoverChange(productId, event) {
-      if (event.detail.isHovering) {
-        currentHoverCard = productId;
-      } else if (currentHoverCard === productId) {
-        currentHoverCard = null;
-      }
-    }
-    
-    // Format currency
-    function formatCurrency(value) {
-      return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      }).format(value);
-    }
-  </script>
+  import Enhanced3DCard from '$lib/components/ui/3d-card/hybridcards/Enhanced3DCard.svelte';
   
-  <div class="container mx-auto py-12 px-4 min-h-screen">
-    <h1 class="text-4xl font-bold text-center mb-2 text-white">Gaming Hardware</h1>
-    <p class="text-center mb-12 max-w-2xl mx-auto text-white/80">
-      Featuring our enhanced 3D interactive cards with advanced layering and animation effects.
-    </p>
+  // Demo State
+  let currentHoverCard = null;
   
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-      {#each products as product}
-        <div class="h-[480px] card-container">
+  // More diverse Z-values to demonstrate greater depths
+  const zValues = {
+    background: -200,
+    backgroundPattern: -170,
+    cardBackground: -150,
+    image: -50,
+    glow: -45, // Move glow closer to image layer to ensure it's visible
+    badge: 40,
+    container: 30,
+    title: 80,
+    subtitle: 60,
+    specs: 70,
+    price: 100,
+    button: 50,
+    buttonIcon: 65
+  };
+  
+  // Products to showcase
+  const products = [
+    {
+      id: 'gaming-keyboard',
+      name: 'HyperX Alloy Elite RGB',
+      subtitle: 'Mechanical Gaming Keyboard',
+      specs: ['Cherry MX Red Switches', 'RGB Per-Key Lighting', 'Full N-Key Rollover'],
+      price: 129.99,
+      originalPrice: 169.99,
+      discount: '24% OFF',
+      image: 'https://images.unsplash.com/photo-1541140532154-b024d705b90a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2836&q=80',
+      color: 'blue',
+      glowColor: '#3b82f6',
+      stock: 12
+    },
+    {
+      id: 'gaming-mouse',
+      name: 'Logitech G Pro X Superlight',
+      subtitle: 'Wireless Gaming Mouse',
+      specs: ['Ultra-Lightweight 63g', '25K DPI HERO Sensor', '70hr Battery Life'],
+      price: 149.99,
+      originalPrice: 159.99,
+      discount: '6% OFF',
+      image: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2065&q=80',
+      color: 'pink',
+      glowColor: '#ec4899',
+      stock: 8
+    },
+    {
+      id: 'gaming-headset',
+      name: 'SteelSeries Arctis Pro',
+      subtitle: 'Wireless Gaming Headset',
+      specs: ['Hi-Res Audio Certified', 'Dual-Wireless System', 'ClearCast Microphone'],
+      price: 249.99,
+      originalPrice: 329.99,
+      discount: '24% OFF',
+      image: 'https://images.unsplash.com/photo-1618329340733-fe6fb0fc2f34?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80',
+      color: 'green',
+      glowColor: '#10b981',
+      stock: 5
+    }
+  ];
+  
+  // Handle hover state changes with card-specific effects
+  function handleHoverChange(productId, event) {
+    if (event.detail.isHovering) {
+      currentHoverCard = productId;
+    } else if (currentHoverCard === productId) {
+      currentHoverCard = null;
+    }
+  }
+  
+  // Format currency
+  function formatCurrency(value) {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(value);
+  }
+</script>
+
+<div class="container mx-auto py-12 px-4 min-h-screen">
+  <h1 class="text-4xl font-bold text-center mb-2 text-white text-shadow-sharp">Gaming Hardware</h1>
+  <p class="text-center mb-12 max-w-2xl mx-auto text-white/80">
+    Featuring our enhanced 3D interactive cards with advanced layering and animation effects.
+  </p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+    {#each products as product}
+      <div class="h-[480px] card-container">
+        <!-- USE DIV WITH MASK INSTEAD OF ENHANCED CARD DIRECTLY -->
+        <div class="card-mask">
           <Enhanced3DCard
             hoverZScale={2}
             initialScale={1}
@@ -101,27 +103,30 @@
             perspective={1800}
             transitionDuration={0.3}
             transitionEasing="cubic-bezier(0.23, 1, 0.32, 1)"
-            cardStyle="border-radius: 1rem;"
-            className="gaming-card"
+            cardStyle="border-radius: 1rem !important; overflow: hidden !important;"
+            className="gaming-card force-rounded"
             on:hoverchange={(e) => handleHoverChange(product.id, e)}
           >
             <svelte:fragment slot="default" let:isHovering let:getItemStyle>
               <!-- Base card with color gradients -->
-              <div class="absolute inset-0 rounded-xl"
+              <div class="absolute inset-0 force-rounded"
                    style:transform={getItemStyle(zValues.cardBackground).transform}
-                   style:transition={getItemStyle(zValues.cardBackground).transition}>
-                <div class="w-full h-full bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl"></div>
+                   style:transition={getItemStyle(zValues.cardBackground).transition}
+                   style="border-radius: 1rem !important;">
+                <div class="w-full h-full bg-gradient-to-br from-gray-900 to-gray-800 force-rounded" 
+                     style="border-radius: 1rem !important;"></div>
               </div>
               
               <!-- Animated background pattern with parallax -->
-              <div class="absolute inset-0 rounded-xl"
+              <div class="absolute inset-0 force-rounded"
                    style:transform={getItemStyle(zValues.backgroundPattern, {delay: 0.05}).transform}
-                   style:transition={getItemStyle(zValues.backgroundPattern, {delay: 0.05}).transition}>
+                   style:transition={getItemStyle(zValues.backgroundPattern, {delay: 0.05}).transition}
+                   style="border-radius: 1rem !important;">
                 <div class="w-full h-full pattern-dots opacity-10"></div>
               </div>
               
               <!-- Product image layer -->
-              <div class="absolute inset-0 rounded-xl"
+              <div class="absolute inset-0 force-rounded"
                    style:transform={getItemStyle(zValues.image, {
                      xOffset: isHovering ? -5 : 0,
                      yOffset: isHovering ? -5 : 0,
@@ -131,30 +136,33 @@
                    style:transition={getItemStyle(zValues.image, {
                      customDuration: 0.6,
                      delay: 0.1
-                   }).transition}>
+                   }).transition}
+                   style="border-radius: 1rem !important; overflow: hidden !important;">
                 <!-- Image -->
                 <img 
                   src={product.image} 
                   alt={product.name}
-                  class="w-full h-full object-cover rounded-xl brightness-90 contrast-110"
+                  class="w-full h-full object-cover brightness-90 contrast-110 force-rounded"
                 />
                 
                 <!-- Gradient overlay -->
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent rounded-xl"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent force-rounded"></div>
               </div>
               
               <!-- Glow effect layer - IMPORTANT: Placed as a separate layer -->
               {#if isHovering}
-                <div class="absolute inset-0 rounded-xl" 
+                <div class="absolute inset-0 force-rounded" 
                      style:transform={getItemStyle(zValues.glow).transform}
                      style:transition={getItemStyle(zValues.glow, {
                        customDuration: 0.8,
                        customEasing: 'cubic-bezier(0.19, 1, 0.22, 1)'
-                     }).transition}>
-                  <div class="w-full h-full rounded-xl" 
+                     }).transition}
+                     style="border-radius: 1rem !important; overflow: hidden !important;">
+                  <div class="w-full h-full force-rounded" 
                        style="background: radial-gradient(circle at center, {product.glowColor} 0%, transparent 70%); 
                               opacity: 0.35; 
-                              mix-blend-mode: screen;">
+                              mix-blend-mode: screen;
+                              border-radius: 1rem !important;">
                   </div>
                 </div>
               {/if}
@@ -206,7 +214,7 @@
                        delay: 0.1
                      }).transition}
                      class="mb-1">
-                  <h3 class="text-2xl font-bold text-white text-shadow-sharp">{product.name}</h3>
+                  <h3 class="text-2xl font-bold text-white text-shadow-sharp text-3d">{product.name}</h3>
                 </div>
                 
                 <!-- Subtitle with slightly different animation timing -->
@@ -218,7 +226,7 @@
                        delay: 0.15
                      }).transition}
                      class="mb-4">
-                  <p class="text-white/90 text-sm font-medium">
+                  <p class="text-white/90 text-sm font-medium text-3d">
                     {product.subtitle}
                   </p>
                 </div>
@@ -255,7 +263,7 @@
                        customDuration: 0.4,
                      }).transition}
                      class="mb-5 flex items-end gap-2">
-                  <div class="text-3xl font-bold text-white text-shadow-sharp">
+                  <div class="text-3xl font-bold text-white text-shadow-sharp text-3d">
                     {formatCurrency(product.price)}
                   </div>
                   {#if product.originalPrice}
@@ -306,72 +314,161 @@
             </svelte:fragment>
           </Enhanced3DCard>
         </div>
-      {/each}
-    </div>
+      </div>
+    {/each}
   </div>
+</div>
+
+<style>
+  :global(body) {
+    background-color: #0f172a;
+    color: white;
+    min-height: 100vh;
+  }
   
-  <style>
-    :global(body) {
-      background-color: #0f172a;
-      color: white;
-      min-height: 100vh;
-    }
+  .text-shadow-sharp {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    /* Critical for sharp text with shadows */
+    transform: translateZ(0) translate3d(0,0,0.001px);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  
+  /* Card container with hardware acceleration but WITHOUT backface-visibility hidden */
+  .card-container {
+    perspective: 1500px;
+    transform-style: preserve-3d;
+    /* Allow 3D overflow with visible backfaces */
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+    position: relative;
+    border-radius: 1rem !important;
     
-    .text-shadow-sharp {
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-      font-weight: 700;
-      letter-spacing: -0.01em;
-    }
+    /* Critical: This transform ensures GPU rendering with pixel-perfect text */
+    transform: translate3d(0,0,0);
     
-    /* Card container */
-    .card-container {
-      perspective: 1500px;
-      transform-style: preserve-3d;
-    }
+    /* High z-index to ensure transforms don't get covered */
+    z-index: 1;
     
-    /* Make text crisper */
-    h1, h2, h3, p, span, button {
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
+    /* Additional properties for text clarity with 3D freedom */
+    font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Card mask but WITHOUT overflow hidden */
+  .card-mask {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    border-radius: 1rem !important;
+    /* No overflow hidden to allow 3D freedom */
     
-    /* Button hover effects */
-    .add-to-cart-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5);
-    }
+    /* SVG mask only for the base shape, allowing content to extend beyond */
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg height='100%25' width='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' rx='16' ry='16' fill='white'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg height='100%25' width='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' rx='16' ry='16' fill='white'/%3E%3C/svg%3E");
     
-    .wishlist-btn:hover .heart-icon {
-      transform: scale(1.2);
-    }
+    /* Additional properties for text clarity without containment */
+    transform-style: preserve-3d;
+    transform: translate3d(0,0,0);
+    will-change: transform;
+  }
+  
+  /* Force rounded WITHOUT overflow constraint */
+  .force-rounded {
+    border-radius: 1rem !important;
+    position: relative;
+    /* Critical for text clarity without using overflow: hidden */
+    transform: translate3d(0,0,0);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Advanced text rendering for 3D context */
+  h1, h2, h3, p, span, button, li, .text-shadow-sharp {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
     
-    .heart-icon {
-      transition: transform 0.3s ease, fill 0.3s ease;
-    }
+    /* Fix for Safari/Chrome text rendering issues in 3D context */
+    transform: translate3d(0,0,0.001px);
     
-    /* Dot pattern background */
-    .pattern-dots {
-      background-image: radial-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px);
-      background-size: 20px 20px;
-    }
+    /* Prevent sub-pixel rendering without using overflow: hidden */
+    filter: blur(0px);
+    will-change: transform;
+  }
+  
+  /* Button hover effects */
+  .add-to-cart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5);
+  }
+  
+  .wishlist-btn:hover .heart-icon {
+    transform: scale(1.2);
+  }
+  
+  .heart-icon {
+    transition: transform 0.3s ease, fill 0.3s ease;
+  }
+  
+  /* Dot pattern background */
+  .pattern-dots {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  
+  /* Critical fixes for component styles WITHOUT overflow constraints */
+  :global(.force-rounded) {
+    border-radius: 1rem !important;
+    /* No overflow hidden */
+  }
+  
+  :global(.gaming-card),
+  :global(.enhanced-card) {
+    border-radius: 1rem !important;
+    /* No overflow hidden to allow 3D freedom */
+  }
+  
+  :global(.gaming-card *),
+  :global(.enhanced-card *) {
+    transform-style: preserve-3d !important;
+    /* Allow 3D transforms to extend beyond boundaries */
+    backface-visibility: visible !important;
+    -webkit-backface-visibility: visible !important;
+  }
+
+  :global(.enhanced-card-wrapper) {
+    border-radius: 1rem !important;
+    position: relative;
+    /* No overflow hidden, allow 3D effects to extend */
+  }
+  
+  /* Advanced text clarity technique for 3D elements */
+  :global(.text-3d) {
+    transform: translate3d(0,0,0) !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    text-rendering: optimizeLegibility !important;
+  }
+  
+  /* Add smooth transitions for list items */
+  li {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  /* Advanced GPU rendering tricks for text */
+  .text-3d {
+    /* Force GPU rendering with sub-pixel precision */
+    transform: perspective(1px) translateZ(0.001px);
+    backface-visibility: hidden;
+    -webkit-transform: perspective(1px) translateZ(0.001px);
+    -webkit-backface-visibility: hidden;
     
-    /* Card styling */
-    :global(.gaming-card),
-    :global(.enhanced-card) {
-      border-radius: 1rem;
-    }
-    
-    :global(.enhanced-card-wrapper) {
-      border-radius: 1rem;
-    }
-    
-    :global(.gaming-card *),
-    :global(.enhanced-card *) {
-      transform-style: preserve-3d !important;
-    }
-    
-    /* Add smooth transitions for list items */
-    li {
-      transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-  </style>
+    /* Critical: prevent blurry text without containment */
+    filter: blur(0px);
+    -webkit-filter: blur(0px);
+  }
+</style>
