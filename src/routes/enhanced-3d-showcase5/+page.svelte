@@ -122,7 +122,7 @@
     <div class="flex justify-center items-center h-[600px]">
       <div class="w-[400px] h-[500px] card-container">
         <Enhanced3DCard
-          hoverZScale={1.8}
+          hoverZScale={1.4}
           initialScale={1}
           hoverScale={1.1}
           maxRotation={15}
