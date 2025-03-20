@@ -26,3 +26,8 @@ ENV NODE_ENV=development
 EXPOSE 5173
 # Run SvelteKit development server
 CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+
+USER root
+RUN mkdir -p /app/node_modules && chown -R node:node /app/node_modules
+RUN mkdir -p /app/.svelte-kit && chown -R node:node /app/.svelte-kit
+USER node

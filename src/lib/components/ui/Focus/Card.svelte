@@ -1,28 +1,35 @@
+<!--
+    * This component is based on ported React code
+    * Original code used under license that allows free use, modification,
+    * and distribution with copyright notice requirement.
+    * Source: [https://ui.aceternity.com/components/focus-cards]
+-->
 <script>
-    import { cn } from "$lib/utils/utils.js";
+    // Fix the import path - use the $lib alias to import from your utils
+    import { cn } from "$lib/utils/utils";
     
     export let card;
     export let index;
     export let hovered;
     
+    // Use Svelte's createEventDispatcher instead of custom events
+    import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
+    
     function handleMouseEnter() {
-      dispatchEvent(new CustomEvent('hoverChange', { 
-        detail: index,
-        bubbles: true 
-      }));
+      dispatch('hoverChange', index);
     }
     
     function handleMouseLeave() {
-      dispatchEvent(new CustomEvent('hoverChange', { 
-        detail: null,
-        bubbles: true 
-      }));
+      dispatch('hoverChange', null);
     }
   </script>
   
   <div
     on:mouseenter={handleMouseEnter}
     on:mouseleave={handleMouseLeave}
+    role="button" 
+    tabindex="0"
     class={cn(
       "rounded-lg relative bg-gray-100 dark:bg-neutral-900 overflow-hidden h-60 md:h-96 w-full transition-all duration-300 ease-out",
       hovered !== null && hovered !== index && "blur-sm scale-[0.98]"
