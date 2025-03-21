@@ -557,111 +557,118 @@
                     
                     <!-- Content container -->
                     <div class="absolute inset-0 flex flex-col p-8"
-                          style:transform={getItemStyle(zValues.container).transform}
-                          style:transition={getItemStyle(zValues.container).transition}>
-                        
-                        <!-- Title and subtitle at top -->
-                        <div>
-                          <!-- Title -->
-                          <div style:transform={getItemStyle(zValues.title, {
-                                xOffset: isHovering ? 5 : 0,
-                                delay: 0.1
-                              }).transform}
-                              style:transition={getItemStyle(zValues.title, {
-                                delay: 0.1
-                              }).transition}
-                              class="mb-1">
-                            <h3 class="text-2xl font-bold text-white text-shadow-sharp">{item.title}</h3>
-                          </div>
-                          
-                          <!-- Subtitle -->
-                          <div style:transform={getItemStyle(zValues.subtitle, {
-                                xOffset: isHovering ? 8 : 0, 
-                                delay: 0.15
-                              }).transform}
-                              style:transition={getItemStyle(zValues.subtitle, {
-                                delay: 0.15
-                              }).transition}
-                              class="mb-4">
-                            <p class="text-white/90 text-sm font-medium">
-                              {item.youtuber?.name || 'Collection Item'}
-                            </p>
-                          </div>
-                        </div>
-                        
-                        <!-- Specs and other elements pushed to bottom -->
-                        <div class="mt-auto">
-                          <!-- Specs list -->
-                          <div style:transform={getItemStyle(zValues.specs, {
-                                yOffset: isHovering ? -3 : 0, 
-                                delay: 0.2
-                              }).transform}
-                              style:transition={getItemStyle(zValues.specs, {
-                                delay: 0.2
-                              }).transition}
-                              class="mb-5">
-                            <ul class="space-y-1">
-                              {#each extractSpecs(item) as spec, i}
-                                <li class="text-white/80 text-xs flex items-center gap-2" 
-                                    style="transition-delay: {0.2 + (i * 0.05)}s; opacity: {isHovering ? '1' : '0.7'}; transform: translateX({isHovering ? '0' : '-5px'}); transition: opacity 0.3s ease, transform 0.3s ease;">
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-white/60" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                  </svg>
-                                  {spec}
-                                </li>
-                              {/each}
-                            </ul>
-                          </div>
-                          
-                          <!-- Final price right after specs -->
-                          <div style:transform={getItemStyle(zValues.price, {
-                                scale: isHovering ? 1.1 : 1, 
-                                delay: 0.25
-                              }).transform}
-                              style:transition={getItemStyle(zValues.price, {
-                                delay: 0.25,
-                                customDuration: 0.4,
-                              }).transition}
-                              class="mb-3">
-                            <div class="flex items-center gap-2">
-                              <div class="text-sm text-white/70">Final Price:</div>
-                              <div class="text-2xl font-bold text-white text-shadow-sharp">
-                                {formatPrice(item.current_price)}
-                              </div>
-                            </div>
-                          </div>
-                          
-                          <!-- Auction ended notice after price -->
-                          <div style:transform={getItemStyle(zValues.specs - 10, {
-                                delay: 0.3
-                              }).transform}
-                              style:transition={getItemStyle(zValues.specs - 10, {
-                                delay: 0.3
-                              }).transition}
-                              class="mb-5">
-                            <div class="bg-white/10 rounded-lg p-3 text-center">
-                              <p class="font-semibold text-red-200">Auction Ended</p>
-                            </div>
-                          </div>
-                          
-                          <!-- View Details button at bottom -->
-                          <div style:transform={getItemStyle(zValues.button, {
-                                delay: 0.35
-                              }).transform}
-                              style:transition={getItemStyle(zValues.button, {
-                                delay: 0.35
-                              }).transition}>
-                            <a 
-                              href="/knives/{item.id}"
-                              class="details-btn w-full bg-gradient-to-r 
-                                    from-gray-600 to-gray-500 hover:from-gray-500 hover:to-gray-400
-                                    text-white px-4 py-3 rounded-lg text-sm font-semibold 
-                                    shadow-xl hover:shadow-gray-500/40 
-                                    transition-all duration-300 ease-out text-center block">
-                              View Details
-                            </a>
-                          </div>
-                        </div>
+     style:transform={getItemStyle(zValues.container).transform}
+     style:transition={getItemStyle(zValues.container).transition}>
+  
+  <!-- Dark gradient overlay for better text readability -->
+  <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent pointer-events-none"></div>
+  
+  <!-- Title and subtitle at top -->
+  <div class="relative z-10">
+    <!-- Title -->
+    <div style:transform={getItemStyle(zValues.title, {
+           xOffset: isHovering ? 5 : 0,
+           delay: 0.1
+         }).transform}
+         style:transition={getItemStyle(zValues.title, {
+           delay: 0.1
+         }).transition}
+         class="mb-1">
+      <h3 class="text-2xl font-bold text-white" style="text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);">{item.title}</h3>
+    </div>
+    
+    <!-- Subtitle -->
+    <div style:transform={getItemStyle(zValues.subtitle, {
+           xOffset: isHovering ? 8 : 0, 
+           delay: 0.15
+         }).transform}
+         style:transition={getItemStyle(zValues.subtitle, {
+           delay: 0.15
+         }).transition}
+         class="mb-4">
+      <p class="text-white text-sm font-medium" style="text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);">
+        {item.youtuber?.name || 'Collection Item'}
+      </p>
+    </div>
+  </div>
+  
+  <!-- Specs and other elements pushed to bottom -->
+  <div class="mt-auto relative z-10">
+    <!-- Specs list with better clarity -->
+    <div style:transform={getItemStyle(zValues.specs, {
+           yOffset: isHovering ? -3 : 0, 
+           delay: 0.2
+         }).transform}
+         style:transition={getItemStyle(zValues.specs, {
+           delay: 0.2
+         }).transition}
+         class="mb-5">
+      <ul class="space-y-2">
+        {#each extractSpecs(item) as spec, i}
+          <li class="flex items-center gap-2" 
+              style="transition-delay: {0.2 + (i * 0.05)}s; opacity: {isHovering ? '1' : '0.9'}; transform: translateX({isHovering ? '0' : '-5px'}); transition: opacity 0.3s ease, transform 0.3s ease;">
+            <div class="bg-black/20 backdrop-blur-sm px-3 py-1.5 rounded-sm w-full flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-teal-400 flex-shrink-0 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+              <span class="text-white text-sm">{spec}</span>
+            </div>
+          </li>
+        {/each}
+      </ul>
+    </div>
+    
+    <!-- Final price with enhanced clarity -->
+    <div style:transform={getItemStyle(zValues.price, {
+           scale: isHovering ? 1.1 : 1, 
+           delay: 0.25
+         }).transform}
+         style:transition={getItemStyle(zValues.price, {
+           delay: 0.25,
+           customDuration: 0.4,
+         }).transition}
+         class="mb-3">
+      <div class="bg-black/10 backdrop-blur-sm px-4 py-2 rounded-sm">
+        <div class="flex items-center gap-2">
+          <div class="text-sm text-white font-medium">Final Price:</div>
+          <div class="text-2xl font-bold text-white" style="text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);">
+            {formatPrice(item.current_price)}
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Auction ended notice with better visibility -->
+    <div style:transform={getItemStyle(zValues.specs - 10, {
+           delay: 0.3
+         }).transform}
+         style:transition={getItemStyle(zValues.specs - 10, {
+           delay: 0.3
+         }).transition}
+         class="mb-5">
+      <div class="bg-black/70 backdrop-blur-sm rounded-lg p-3 text-center">
+        <p class="font-semibold text-red-300">Auction Ended</p>
+      </div>
+    </div>
+    
+    <!-- View Details button at bottom -->
+    <div style:transform={getItemStyle(zValues.button, {
+           delay: 0.35
+         }).transform}
+         style:transition={getItemStyle(zValues.button, {
+           delay: 0.35
+         }).transition}>
+      <a 
+        href="/knives/{item.id}"
+        class="details-btn w-full bg-gradient-to-r 
+               from-gray-700 to-gray-600 hover:from-gray-600 hover:to-gray-500
+               text-white px-4 py-3 rounded-lg text-sm font-semibold 
+               shadow-xl hover:shadow-gray-500/40 
+               transition-all duration-300 ease-out text-center block">
+        View Details
+      </a>
+    </div>
+  </div>
                   </svelte:fragment>
                 </Enhanced3DCard>
               </div>
