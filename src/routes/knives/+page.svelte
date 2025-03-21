@@ -374,7 +374,7 @@
 </script>
 
 <div class="container mx-auto py-8">
-  <h1 class="mb-8 text-center text-4xl font-bold text-white drop-shadow-lg">Knives Collection</h1>
+  <h1 class="mb-8 text-center text-4xl font-bold text-white drop-shadow-lg">Knife Collection</h1>
 
   {#if loading}
     <div class="text-center text-xl text-white/80">Loading auctions...</div>
@@ -441,7 +441,7 @@
       <!-- Past auctions toggle header -->
       <div class="mb-8 flex items-center justify-between">
         <h2 class="text-2xl font-bold text-white drop-shadow-lg">
-          Past Knives Auctions
+          Past Knife Auctions
         </h2>
         <button 
           on:click={() => showPastAuctions = !showPastAuctions}

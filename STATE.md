@@ -11,6 +11,8 @@ The project follows a typical SvelteKit structure:
   - Various route folders containing page components and logic
   - `enhanced-3d-showcase5/` - Demo page for the 3D card component
   - `knives/+page.svelte` - Knives page using the AuctionCard component for real auction items
+  - `knives/[id]/+page.svelte` - Individual knife auction detail page
+  - `knife/[id]/+page.svelte` - Redirect page from old route to new route
 - `src/lib/` - Contains reusable components, utilities, and stores
   - `components/` - Reusable UI components
     - `ui/` - Generic UI components 
@@ -43,6 +45,8 @@ The project follows a typical SvelteKit structure:
 - Properly scrollable pages with fixed animated background
 
 ## Recent Changes
+- Standardized routes by moving knife detail pages from `/knife/[id]` to `/knives/[id]` for consistency with the list page
+- Added a redirect from old `/knife/[id]` routes to the new `/knives/[id]` path to maintain compatibility with existing links
 - Made auction card images clickable to navigate directly to the specific auction page
 - Removed redundant "current bid" text from the price display
 - Fixed bid count display to show accurate bid information from API instead of random numbers
