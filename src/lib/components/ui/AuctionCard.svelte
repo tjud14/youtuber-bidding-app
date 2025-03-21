@@ -276,7 +276,7 @@
         </div>
       {/if}
       
-      <!-- Bids badge -->
+      <!-- Bids badge in left corner -->
       {#if item.bids > 0}
         <div style:transform={getItemStyle(zValues.badge, {
                scale: isHovering ? (1 + Math.sin(currentTime * 8) * 0.05) : 1,
@@ -286,8 +286,8 @@
                customEasing: "cubic-bezier(0.34, 1.56, 0.64, 1)"
              }).transform}
              style:transition={getItemStyle(zValues.badge).transition}
-             class="absolute top-6 left-6">
-          <span class="px-3 py-1.5 rounded-full text-xs font-bold shadow-lg bg-indigo-600 text-white shadow-indigo-600/30"
+             class="absolute top-5 left-5">
+          <span class="px-3 py-1.5 rounded-full text-xs font-bold shadow-lg bg-red-500 text-white shadow-red-500/30"
                 style:transform={getItemStyle(zValues.badgeText, {
                   scale: isHovering ? (1 + Math.sin(currentTime * 10) * 0.05) : 1
                 }).transform}>
@@ -296,8 +296,8 @@
         </div>
       {/if}
       
-      <!-- Item label badge (HOT ITEM, FEATURED, etc) -->
-      {#if item.label}
+      <!-- Time remaining badge in right corner (like the 29% OFF badge) -->
+      {#if item.timeLeft}
         <div style:transform={getItemStyle(zValues.badge + 5, {
                xOffset: isHovering ? sineWave(currentTime, 3, 3) * -1 : 0,
                yOffset: isHovering ? -8 : 0,
@@ -305,196 +305,174 @@
                customEasing: "cubic-bezier(0.5, 2, 0.75, 1)"
              }).transform}
              style:transition={getItemStyle(zValues.badge + 5).transition}
-             class="absolute top-6 right-6">
-          <span class="bg-red-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg shadow-red-500/30"
+             class="absolute top-5 right-5">
+          <span class="bg-indigo-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg shadow-indigo-600/30"
                 style:transform={isHovering ? `rotate(${sineWave(currentTime, 5, 5)}deg) scale(${1 + Math.sin(currentTime * 5) * 0.1})` : ''}>
-            {item.label}
+            {item.timeLeft}
           </span>
         </div>
       {/if}
       
-      <!-- Time remaining badge -->
-      {#if item.timeLeft}
-        <div style:transform={getItemStyle(zValues.timerContainer, {
-               scale: isHovering ? breathingAnimation(currentTime, 1, 1.05) : 1,
-               customDuration: 0.4,
-               customEasing: "cubic-bezier(0.5, 2, 0.75, 1)"
-             }).transform}
-             style:transition={getItemStyle(zValues.timerContainer).transition}
-             class="absolute top-16 right-6 mt-2">
-          <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-white/10 text-white backdrop-blur-sm border border-white/20 shadow-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <polyline points="12 6 12 12 16 14"></polyline>
-            </svg>
-            <span style:transform={getItemStyle(zValues.timerText, {
-                  scale: isHovering ? (1 + Math.sin(currentTime * 8) * 0.1) : 1
-                }).transform}>
-              {item.timeLeft} left
-            </span>
-          </div>
-        </div>
-      {/if}
-      
       <!-- Content container with staggered elements -->
-      <div class="absolute inset-0 flex flex-col justify-end p-8"
+      <div class="absolute inset-0 flex flex-col p-8"
            style:transform={getItemStyle(zValues.container).transform}
            style:transition={getItemStyle(zValues.container).transition}>
         
-        <!-- Title with shadow and independent movement -->
-        <div style:transform={getItemStyle(zValues.title, {
-               xOffset: isHovering ? 8 + sineWave(currentTime, 5, 1) : 0,
-               yOffset: isHovering ? -5 + cosineWave(currentTime, 3, 0.7) : 0,
-               customDuration: 0.5,
-               customEasing: "cubic-bezier(0.34, 1.56, 0.64, 1)"
-             }).transform}
-             style:transition={getItemStyle(zValues.title).transition}
-             class="mb-2 relative">
-          <!-- Title shadow with offset for depth -->
-          <div class="absolute -left-1 -top-1 opacity-30 blur-sm"
-               style:transform={getItemStyle(zValues.titleShadow).transform}
-               style:transition={getItemStyle(zValues.titleShadow).transition}>
-            <h3 class="text-2xl font-bold text-indigo-300">{item.name}</h3>
+        <!-- Main content area with flex spacing -->
+        <div class="flex-1 flex flex-col">
+          <!-- Top section: Title (where "Quantum Reality Renderer" is) -->
+          <div class="mt-16" 
+               style:transform={getItemStyle(zValues.title, {
+                 xOffset: isHovering ? 8 + sineWave(currentTime, 5, 1) : 0,
+                 yOffset: isHovering ? -5 + cosineWave(currentTime, 3, 0.7) : 0,
+                 customDuration: 0.5,
+                 customEasing: "cubic-bezier(0.34, 1.56, 0.64, 1)"
+               }).transform}
+               style:transition={getItemStyle(zValues.title).transition}>
+            <h3 class="text-2xl font-bold text-white text-shadow-sharp line-clamp-2">{item.name}</h3>
           </div>
-          <h3 class="text-2xl font-bold text-white text-shadow-sharp relative z-10">{item.name}</h3>
+          
+          <!-- Middle section: Youtuber and specs (where "Limited Reality Processor" is) -->
+          <div class="mt-2">
+            {#if item.youtuber}
+              <div style:transform={getItemStyle(zValues.subtitle, {
+                    xOffset: isHovering ? 12 + sineWave(currentTime, 3, 1.5) : 0,
+                    yOffset: isHovering ? -2 + cosineWave(currentTime, 2, 0.5) : 0,
+                    delay: 0.05,
+                    customDuration: 0.6
+                  }).transform}
+                  style:transition={getItemStyle(zValues.subtitle).transition}
+                  class="mb-2">
+                <p class="text-gray-300 text-sm font-medium">
+                  By {item.youtuber}
+                </p>
+              </div>
+            {/if}
+            
+            <!-- Specs list with wave-like sequential animation -->
+            {#if item.specs && item.specs.length > 0}
+              <div style:transform={getItemStyle(zValues.specs, {
+                     yOffset: isHovering ? -3 : 0,
+                     delay: 0.1,
+                     customDuration: 0.7
+                   }).transform}
+                   style:transition={getItemStyle(zValues.specs).transition}>
+                <ul class="space-y-1">
+                  {#each item.specs as spec, i}
+                    <li class="text-white/70 text-sm flex items-start gap-1.5" 
+                        style="transition-delay: {0.15 + (i * 0.07)}s; 
+                               opacity: {isHovering ? '1' : '0.7'}; 
+                               transform: translateX({isHovering ? sineWave(currentTime + i * 0.5, 5, 1) : -5}px) 
+                                          translateY({isHovering ? cosineWave(currentTime + i * 0.3, 3, 0.7) : 0}px); 
+                               transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);">
+                      <svg xmlns="http://www.w3.org/2000/svg" 
+                           class="h-3.5 w-3.5 text-indigo-400 mt-1 flex-shrink-0" 
+                           style="transform: scale({isHovering ? 1 + Math.sin(currentTime * 5 + i) * 0.2 : 1});"
+                           viewBox="0 0 20 20" 
+                           fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="line-clamp-1">{spec}</span>
+                    </li>
+                  {/each}
+                </ul>
+              </div>
+            {/if}
+          </div>
         </div>
         
-        <!-- Subtitle (YouTuber) with different timing and movement - only show if there is a youtuber -->
-        {#if item.youtuber}
-          <div style:transform={getItemStyle(zValues.subtitle, {
-                xOffset: isHovering ? 12 + sineWave(currentTime, 3, 1.5) : 0,
-                yOffset: isHovering ? -2 + cosineWave(currentTime, 2, 0.5) : 0,
-                delay: 0.05,
-                customDuration: 0.6
-              }).transform}
-              style:transition={getItemStyle(zValues.subtitle).transition}
-              class="mb-6">
-            <p class="text-white/90 text-sm font-medium">
-              By {item.youtuber}
-            </p>
+        <!-- Bottom section: Price and buttons -->
+        <div class="mt-auto">
+          <!-- Starting bid (smaller text above main price) -->
+          <div class="text-sm text-white/60 mb-1">
+            Starting bid: {formatCurrency(item.startingPrice)}
           </div>
-        {/if}
-        
-        <!-- Specs list with wave-like sequential animation -->
-        {#if item.specs && item.specs.length > 0}
-          <div style:transform={getItemStyle(zValues.specs, {
-                 yOffset: isHovering ? -3 : 0,
-                 delay: 0.1,
-                 customDuration: 0.7
+          
+          <!-- Main price (where "$2,499.99" is) -->
+          <div style:transform={getItemStyle(zValues.priceTag, {
+                 scale: isHovering ? breathingAnimation(currentTime, 1, 1.05) : 1,
+                 xOffset: isHovering ? sineWave(currentTime, 7, 0.7) : 0,
+                 yOffset: isHovering ? -15 : 0,
+                 delay: 0.15,
+                 customDuration: 0.4,
+                 customEasing: "cubic-bezier(0.34, 1.56, 0.64, 1)"
                }).transform}
-               style:transition={getItemStyle(zValues.specs).transition}
-               class="mb-6">
-            <ul class="space-y-2">
-              {#each item.specs as spec, i}
-                <li class="text-white/80 text-xs flex items-center gap-2" 
-                    style="transition-delay: {0.15 + (i * 0.07)}s; 
-                           opacity: {isHovering ? '1' : '0.7'}; 
-                           transform: translateX({isHovering ? sineWave(currentTime + i * 0.5, 5, 1) : -5}px) 
-                                      translateY({isHovering ? cosineWave(currentTime + i * 0.3, 3, 0.7) : 0}px); 
-                           transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);">
-                  <svg xmlns="http://www.w3.org/2000/svg" 
-                       class="h-3 w-3 text-indigo-400" 
-                       style="transform: scale({isHovering ? 1 + Math.sin(currentTime * 5 + i) * 0.2 : 1});"
-                       viewBox="0 0 20 20" 
-                       fill="currentColor">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                  </svg>
-                  {spec}
-                </li>
-              {/each}
-            </ul>
-          </div>
-        {/if}
-        
-        <!-- Price with enhanced animations - Bid info -->
-        <div style:transform={getItemStyle(zValues.priceTag, {
-               scale: isHovering ? breathingAnimation(currentTime, 1, 1.05) : 1,
-               xOffset: isHovering ? sineWave(currentTime, 7, 0.7) : 0,
-               yOffset: isHovering ? -15 : 0,
-               delay: 0.15,
-               customDuration: 0.4,
-               customEasing: "cubic-bezier(0.34, 1.56, 0.64, 1)"
-             }).transform}
-             style:transition={getItemStyle(zValues.priceTag).transition}
-             class="mb-6 flex flex-col gap-1">
-          <div class="flex items-end gap-3">
-            <div class="text-2xl font-bold text-white text-shadow-sharp"
+               style:transition={getItemStyle(zValues.priceTag).transition}
+               class="mb-4">
+            <div class="text-3xl font-extrabold text-white text-shadow-sharp"
                  style:transform={getItemStyle(zValues.priceText, {
                    scale: isHovering ? 1 + Math.sin(currentTime * 6) * 0.05 : 1
                  }).transform}>
               {formatCurrency(item.currentBid)}
             </div>
           </div>
-          <div class="text-xs text-white/60">
-            Starting bid: {formatCurrency(item.startingPrice)}
-          </div>
-        </div>
-        
-        <!-- Button group with complex hover effects -->
-        <div class="flex gap-4">
-          <!-- Bid button with animated glow -->
-          <div style:transform={getItemStyle(zValues.button, {
-                 yOffset: isHovering ? 5 : 0,
-                 delay: 0.2,
-                 customDuration: 0.6,
-                 customEasing: "cubic-bezier(0.34, 1.56, 0.64, 1)"
-               }).transform}
-               style:transition={getItemStyle(zValues.button).transition}
-               class="flex-1 relative group">
-            <!-- Button glow effect that animates -->
-            {#if isHovering}
-              <div class="absolute inset-0 rounded-lg blur-md group-hover:blur-xl -z-10"
-                   style:transform={getItemStyle(zValues.buttonGlow, {
-                     scale: 1 + Math.sin(currentTime * 5) * 0.1
-                   }).transform}
-                   style:background={`linear-gradient(120deg, ${item.glowColor}, #6366f1)`}
-                   style:opacity={0.4 + Math.sin(currentTime * 3) * 0.2}>
-              </div>
-            {/if}
-            <button on:click={handleBidClick} 
-                  class="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 
-                       hover:from-indigo-500 hover:to-indigo-400
-                       text-white px-4 py-3 rounded-lg text-sm font-semibold 
-                       shadow-xl transition-all duration-300 ease-out relative z-10
-                       border border-indigo-400/30 flex items-center justify-center"
-                  style:transform={isHovering ? `translateY(${sineWave(currentTime, 2, 3)}px)` : ''}>
-              <span style:transform={getItemStyle(zValues.buttonText, {
-                    scale: isHovering ? 1 + Math.sin(currentTime * 8) * 0.05 : 1
-                  }).transform}
-                  style:display="inline-block">
-                Place Bid
-              </span>
-            </button>
-          </div>
           
-          <!-- Watchlist button with heart animation -->
-          <div style:transform={getItemStyle(zValues.heartButton, {
-                 yOffset: isHovering ? 5 : 0,
-                 delay: 0.25,
-                 customDuration: 0.7
-               }).transform}
-               style:transition={getItemStyle(zValues.heartButton).transition}
-               class="w-14">
-            <button on:click={handleWatchlistClick}
-                  class="w-full h-full bg-white/10 hover:bg-white/20 
-                       text-white rounded-lg flex items-center justify-center 
-                       border border-white/30 shadow-xl relative
-                       transition-all duration-300 ease-out"
-                  style:transform={isHovering ? `translateY(${sineWave(currentTime, 2, 3) * 1.2}px)` : ''}>
-              <div class="flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" 
-                     class="h-5 w-5" 
-                     style:transform={getItemStyle(zValues.heartIcon, {
-                       scale: isHovering ? 1 + Math.sin(currentTime * 15) * 0.2 : 1
+          <!-- Button group with complex hover effects -->
+          <div class="flex gap-4">
+            <!-- Bid button with animated glow -->
+            <div style:transform={getItemStyle(zValues.button, {
+                   yOffset: isHovering ? 5 : 0,
+                   delay: 0.2,
+                   customDuration: 0.6,
+                   customEasing: "cubic-bezier(0.34, 1.56, 0.64, 1)"
+                 }).transform}
+                 style:transition={getItemStyle(zValues.button).transition}
+                 class="flex-1 relative group">
+              <!-- Button glow effect that animates -->
+              {#if isHovering}
+                <div class="absolute inset-0 rounded-lg blur-md group-hover:blur-xl -z-10"
+                     style:transform={getItemStyle(zValues.buttonGlow, {
+                       scale: 1 + Math.sin(currentTime * 5) * 0.1
                      }).transform}
-                     style:fill={isHovering ? `rgba(255, ${100 + Math.sin(currentTime * 10) * 50}, ${100 + Math.sin(currentTime * 10) * 50}, 0.8)` : 'none'}
-                     style:transition="fill 0.3s ease, transform 0.3s ease"
-                     viewBox="0 0 24 24" 
-                     stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-              </div>
-            </button>
+                     style:background={`linear-gradient(120deg, ${item.glowColor}, #6366f1)`}
+                     style:opacity={0.4 + Math.sin(currentTime * 3) * 0.2}>
+                </div>
+              {/if}
+              <button on:click={handleBidClick} 
+                    class="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 
+                         hover:from-indigo-500 hover:to-indigo-400
+                         text-white px-4 py-3 rounded-lg text-sm font-semibold 
+                         shadow-xl transition-all duration-300 ease-out relative z-10
+                         border border-indigo-400/30 flex items-center justify-center"
+                    style:transform={isHovering ? `translateY(${sineWave(currentTime, 2, 3)}px)` : ''}>
+                <span style:transform={getItemStyle(zValues.buttonText, {
+                      scale: isHovering ? 1 + Math.sin(currentTime * 8) * 0.05 : 1
+                    }).transform}
+                    style:display="inline-block">
+                  Place Bid
+                </span>
+              </button>
+            </div>
+            
+            <!-- Watchlist button with heart animation -->
+            <div style:transform={getItemStyle(zValues.heartButton, {
+                   yOffset: isHovering ? 5 : 0,
+                   delay: 0.25,
+                   customDuration: 0.7
+                 }).transform}
+                 style:transition={getItemStyle(zValues.heartButton).transition}
+                 class="w-14">
+              <button on:click={handleWatchlistClick}
+                    class="w-full h-full bg-white/10 hover:bg-white/20 
+                         text-white rounded-lg flex items-center justify-center 
+                         border border-white/30 shadow-xl relative
+                         transition-all duration-300 ease-out"
+                    style:transform={isHovering ? `translateY(${sineWave(currentTime, 2, 3) * 1.2}px)` : ''}>
+                <div class="flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" 
+                       class="h-5 w-5" 
+                       style:transform={getItemStyle(zValues.heartIcon, {
+                         scale: isHovering ? 1 + Math.sin(currentTime * 15) * 0.2 : 1
+                       }).transform}
+                       style:fill={isHovering ? `rgba(255, ${100 + Math.sin(currentTime * 10) * 50}, ${100 + Math.sin(currentTime * 10) * 50}, 0.8)` : 'none'}
+                       style:transition="fill 0.3s ease, transform 0.3s ease"
+                       viewBox="0 0 24 24" 
+                       stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                </div>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -537,5 +515,20 @@
   :global(.enhanced-card-wrapper *),
   :global(.enhanced-card *) {
     transform-style: preserve-3d !important;
+  }
+  
+  /* Add these new utility classes */
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 </style> 
