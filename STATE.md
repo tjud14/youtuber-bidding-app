@@ -10,7 +10,7 @@ The project follows a typical SvelteKit structure:
   - `profile/+page.svelte` - User profile page with GlowingEffect implementation
   - Various route folders containing page components and logic
   - `enhanced-3d-showcase5/` - Demo page for the 3D card component
-  - `knives/+page.svelte` - Knives page using the AuctionCard component for real auction items
+  - `knives/+page.svelte` - Knives page using the AuctionCard component for current auctions and PastAuctionCard for past auctions
   - `knives/[id]/+page.svelte` - Individual knife auction detail page
   - `knife/[id]/+page.svelte` - Redirect page from old route to new route
 - `src/lib/` - Contains reusable components, utilities, and stores
@@ -21,7 +21,9 @@ The project follows a typical SvelteKit structure:
       - `Focus/FocusCard.svelte` and `Focus/Card.svelte` - Interactive cards with focus effects
       - `3d-card/hybridcards/Enhanced3DCard.svelte` - Advanced 3D card transformation component
       - `AuctionCard.svelte` - Reusable auction card component with 3D effects and auction-specific UI
+      - `PastAuctionCard.svelte` - Specialized card component for past auctions with grayscale effect and "SOLD" badge
     - `Navbar.svelte` - Main navigation component
+    - `ResponsiveImage.svelte` - Component for responsive image handling with webp support and fallback options
   - `utils/` - Utility functions and helpers
     - `utils.js` - Common utility functions including the `cn` function for class composition
     - `profanity-filter.js` - Utility for filtering profanity from user inputs
@@ -45,6 +47,20 @@ The project follows a typical SvelteKit structure:
 - Properly scrollable pages with fixed animated background
 
 ## Recent Changes
+- Fixed past auction cards showing "$NaN" prices by adding proper validation for price values
+- Fixed missing animations on past auction cards by adding proper CSS keyframes and transform styles
+- Added proper validation and type checking for past auction items to ensure consistent display
+- Fixed current auctions displaying "$NaN" by properly mapping API data to the AuctionCard component's expected format
+- Added missing updateTimeRemaining function to ensure timers work correctly
+- Fixed image handling in PastAuctionCard by replacing dynamic style attributes with proper classes
+- Improved grayscale and brightness effects for past auction cards with dedicated utility classes
+- Fixed fetchApi integration for loading past auction items with proper error handling
+- Created a dedicated PastAuctionCard component for past auctions with proper image handling and "SOLD" badge
+- Fixed past auction image loading issues by integrating ResponsiveImage component
+- Enhanced image error handling with fallbacks to ensure graceful degradation
+- Improved past auction display with consistent layout and styling matching the current auctions
+- Refactored knives page to use the cleaner implementation with separate components
+- Improved animations with staggered delays for smoother card reveal effects
 - Standardized routes by moving knife detail pages from `/knife/[id]` to `/knives/[id]` for consistency with the list page
 - Added a redirect from old `/knife/[id]` routes to the new `/knives/[id]` path to maintain compatibility with existing links
 - Made auction card images clickable to navigate directly to the specific auction page
@@ -89,6 +105,8 @@ The project follows a typical SvelteKit structure:
 - `NicknameCheckWrapper.svelte` - A wrapper component that checks for user nicknames
 - `Enhanced3DCard.svelte` - A component for creating interactive 3D card effects with layering capabilities
 - `AuctionCard.svelte` - A reusable auction-specific card component with 3D effects, built on Enhanced3DCard
+- `PastAuctionCard.svelte` - A specialized card component for past auctions with grayscale effect, "SOLD" badge, and robust image handling
+- `ResponsiveImage.svelte` - A component that handles responsive images with format support and fallbacks
 - `GlowingEffect.svelte` - A component that adds an interactive glowing border to elements
 - `FocusCard.svelte` - A component that creates a gallery of cards where the focused card stands out while others blur
 
@@ -99,7 +117,8 @@ The project follows a typical SvelteKit structure:
 - Extensive use of backdrop-blur, semi-transparency, and shadow effects to complement the animated background
 - Fixed layout structure to ensure proper scrolling while maintaining visual effects
 - Enhanced 3D card display with proper overflow and spacing for hover effects
-- Consistent card styling across the application with the AuctionCard component
+- Consistent card styling across the application with the AuctionCard and PastAuctionCard components
+- Grayscale and filter effects for past auctions to distinguish them from current auctions
 
 ## Authentication
 - Authentication status is checked when the application loads

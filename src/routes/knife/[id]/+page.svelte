@@ -5,7 +5,7 @@
 
   // Redirect from /knife/[id] to /knives/[id]
   onMount(() => {
-    const id = $page.params.id;
+      const id = $page.params.id;
     goto(`/knives/${id}`, { replaceState: true });
   });
 </script>
